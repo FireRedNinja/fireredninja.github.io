@@ -2,7 +2,7 @@ import React from 'react'
 import Project from './project'
 import projectsList from '../data/projectsList'
 import { graphql, useStaticQuery } from 'gatsby'
-import { Pivot, PivotItem, Text } from '@fluentui/react'
+import { Tab, Tabs } from 'react-bootstrap'
 
 const buildProjectList = (projects, images) => {
   return projects.map((project) => {
@@ -51,9 +51,9 @@ const Projects = () => {
 
   return (
     <div className="mt-12 mb-12">
-      <Text variant={'xxLarge'}>Projects</Text>
-      <Pivot linkSize="large">
-        <PivotItem headerText="Home">
+      <h2>Projects</h2>
+      <Tabs defaultActiveKey="personal">
+        <Tab eventKey="personal" title="Personal">
           <div className="flex flex-col mt-2">
             {buildProjectList(
               projectsList.filter((project) =>
@@ -62,8 +62,8 @@ const Projects = () => {
               images
             )}
           </div>
-        </PivotItem>
-        <PivotItem headerText="Hackathon">
+        </Tab>
+        <Tab eventKey="hackathon" title="Hackathon">
           <div className="flex flex-col mt-2">
             {buildProjectList(
               projectsList.filter((project) =>
@@ -72,8 +72,8 @@ const Projects = () => {
               images
             )}
           </div>
-        </PivotItem>
-      </Pivot>
+        </Tab>
+      </Tabs>
     </div>
   )
 }
