@@ -12,7 +12,11 @@ const iconMappings = {
 const buildLinks = (links) =>
   links.map((link) => (
     <a href={link.link} key={link.name} className="mr-2">
-      <FontAwesomeIcon icon={iconMappings[link.name.toLowerCase()]} size="2x" />
+      <FontAwesomeIcon
+        className="text-black"
+        icon={iconMappings[link.name.toLowerCase()]}
+        size="2x"
+      />
     </a>
   ))
 

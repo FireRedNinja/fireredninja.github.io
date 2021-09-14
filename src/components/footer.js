@@ -2,8 +2,12 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
+import { FooterStyles } from './footer.module.scss'
+
 const Footer = (props) => (
-  <footer className="flex content-center justify-center h-48 p-12 bg-gray-700 w-full absolute bottom-0">
+  <footer
+    className={`flex content-center justify-center h-48 p-12 bg-gray-700 w-full absolute bottom-0 ${FooterStyles}`}
+  >
     <a href="https://github.com/FireRedNinja" className="mx-2">
       <div className="flex flex-col">
         <FontAwesomeIcon
