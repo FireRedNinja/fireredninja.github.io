@@ -4,7 +4,7 @@ import { faGithub, faItchIo } from '@fortawesome/free-brands-svg-icons'
 import { GatsbyImage } from 'gatsby-plugin-image'
 import { Modal } from 'react-bootstrap'
 
-import { ModalStyles } from './project.module.scss'
+import { ModalStyles, ModalContentStyles } from './project.module.scss'
 
 const iconMappings = {
   github: faGithub,
@@ -45,6 +45,7 @@ const Project = (props) => {
             onHide={handleClose}
             centered
             dialogClassName={ModalStyles}
+            contentClassName={ModalContentStyles}
           >
             <Modal.Body className="flex justify-center p-0">
               <GatsbyImage image={props.image} alt="" />
