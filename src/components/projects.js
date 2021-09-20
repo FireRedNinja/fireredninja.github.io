@@ -36,7 +36,6 @@ const Projects = () => {
             gatsbyImageData(
               placeholder: DOMINANT_COLOR
               height: 500
-              transformOptions: { cropFocus: CENTER }
               quality: 80
             )
             fluid {

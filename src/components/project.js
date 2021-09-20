@@ -4,6 +4,8 @@ import { faGithub, faItchIo } from '@fortawesome/free-brands-svg-icons'
 import { GatsbyImage } from 'gatsby-plugin-image'
 import { Modal } from 'react-bootstrap'
 
+import { ModalStyles } from './project.module.scss'
+
 const iconMappings = {
   github: faGithub,
   'itch.io': faItchIo,
@@ -24,29 +26,31 @@ const Project = (props) => {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const handleShow = (e) => {
+    setShow(true)
+    e.stopPropagation()
+  }
   return (
     <div className="flex flex-col mb-4 border-solid border rounded p-6">
       {props.image && (
-        <button
-          className="flex flex-row justify-center rounded max-h-32 md:max-h-56 hover:bg-gray-100 active:bg-green-700"
-          onClick={handleShow}
-        >
-          <GatsbyImage className="rounded" image={props.image} alt="" />
-          <div onClick={(e) => e.stopPropagation()}>
-            <Modal
-              show={show}
-              onHide={handleClose}
-              animation={false}
-              centered
-              size="lg"
-            >
-              <Modal.Body className="flex justify-center p-0">
-                <GatsbyImage image={props.image} alt="" />
-              </Modal.Body>
-            </Modal>
-          </div>
-        </button>
+        <>
+          <button
+            className="flex justify-center items-center rounded overflow-hidden max-h-32 md:max-h-56 hover:bg-gray-100 active:bg-green-700"
+            onClick={handleShow}
+          >
+            <GatsbyImage className="rounded" image={props.image} alt="" />
+          </button>
+          <Modal
+            show={show}
+            onHide={handleClose}
+            centered
+            dialogClassName={`max-w-max ${ModalStyles}`}
+          >
+            <Modal.Body className="flex justify-center p-0">
+              <GatsbyImage image={props.image} alt="" />
+            </Modal.Body>
+          </Modal>
+        </>
       )}
       <div className="flex flex-col">
         <div className="flex flex-col py-4">
