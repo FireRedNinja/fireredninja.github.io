@@ -44,7 +44,7 @@ const Project = (props) => {
             show={show}
             onHide={handleClose}
             centered
-            dialogClassName={`max-w-max ${ModalStyles}`}
+            dialogClassName={ModalStyles}
           >
             <Modal.Body className="flex justify-center p-0">
               <GatsbyImage image={props.image} alt="" />

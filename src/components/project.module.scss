@@ -1,6 +1,9 @@
 .ModalStyles {
-  max-width: max-content;
   img {
     border-radius: 0.25rem;
+  }
+
+  @media (min-width: 640px) {
+    max-width: max-content;
   }
 }
