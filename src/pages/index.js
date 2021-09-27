@@ -1,11 +1,11 @@
-import React from 'react'
-import '../components/layout.css'
+import React from 'react';
+import '../components/layout.css';
 
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from '../components/layout';
+import SEO from '../components/seo';
 
-import Projects from '../components/projects'
-import ReactComment from '../components/reactComment'
+import Projects from '../components/projects';
+import ReactComment from '../components/reactComment';
 
 const IndexPage = () => (
   <Layout>
@@ -15,6 +15,6 @@ const IndexPage = () => (
     <SEO title="Home" />
     <Projects />
   </Layout>
-)
+);
 
-export default IndexPage
+export default IndexPage;

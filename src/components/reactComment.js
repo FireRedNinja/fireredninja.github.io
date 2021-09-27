@@ -1,30 +1,30 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 class ReactComment extends Component {
   static defaultProps = {
     trim: true,
-  }
+  };
 
   componentDidMount() {
-    let el = ReactDOM.findDOMNode(this)
-    ReactDOM.unmountComponentAtNode(el)
-    el.outerHTML = this.createComment()
+    let el = ReactDOM.findDOMNode(this);
+    ReactDOM.unmountComponentAtNode(el);
+    el.outerHTML = this.createComment();
   }
 
   createComment() {
-    let text = this.props.text
+    let text = this.props.text;
 
     if (this.props.trim) {
-      text = text.trim()
+      text = text.trim();
     }
 
-    return `<!-- ${text} -->`
+    return `<!-- ${text} -->`;
   }
 
   render() {
-    return <div />
+    return <div />;
   }
 }
 
-export default ReactComment
+export default ReactComment;

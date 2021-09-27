@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import * as STYLES from './header.module.scss'
+import PropTypes from 'prop-types';
+import React from 'react';
+import * as STYLES from './header.module.scss';
 
 const Header = ({ siteTitle }) => (
   <header className={`md:py-20 ${STYLES.Header}`}>
@@ -13,14 +13,14 @@ const Header = ({ siteTitle }) => (
       </span>
     </div>
   </header>
-)
+);
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
-}
+};
 
 Header.defaultProps = {
   siteTitle: ``,
-}
+};
 
-export default Header
+export default Header;

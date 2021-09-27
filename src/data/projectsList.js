@@ -59,7 +59,7 @@ let projectList = [
   //   tags: ['personal'],
   //   links: [],
   // },
-]
+];
 
 const hackathonProjects = [
   {
@@ -177,7 +177,7 @@ const hackathonProjects = [
       },
     ],
   },
-]
+];
 
-projectList = projectList.concat(hackathonProjects)
-export default projectList
+projectList = projectList.concat(hackathonProjects);
+export default projectList;

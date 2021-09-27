@@ -1,11 +1,11 @@
-import React from 'react'
-import '../components/layout.css'
+import React from 'react';
+import '../components/layout.css';
 
-import Layout from '../components/layout'
-import SEO from '../components/seo'
-import svg404 from '../images/undraw_page_not_found_su7k.svg'
-import '../components/layout.css'
-import { Link } from 'gatsby'
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import svg404 from '../images/undraw_page_not_found_su7k.svg';
+import '../components/layout.css';
+import { Link } from 'gatsby';
 
 const NotFoundPage = () => (
   <Layout header={false}>
@@ -14,14 +14,15 @@ const NotFoundPage = () => (
       <img className="flex content-center" alt="404" src={svg404} />
       <Link to="/">
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
           href=""
+          aria-label="Go back home"
         >
           Go Back Home
         </button>
       </Link>
     </div>
   </Layout>
-)
+);
 
-export default NotFoundPage
+export default NotFoundPage;
