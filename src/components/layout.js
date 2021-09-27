@@ -9,15 +9,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Header from '../components/header'
 import Footer from '../components/footer'
-import { LayoutStyles } from './layout.module.scss'
+import * as STYLES from './layout.module.scss'
 
 const Layout = ({ header = true, footer = true, children }) => {
   return (
-    <div className="relative min-h-screen">
+    <div className={STYLES.Layout}>
       {header ? <Header /> : null}
-      <main className={`mx-auto px-8 max-w-5xl pb-48 ${LayoutStyles}`}>
-        {children}
-      </main>
+      <main className={STYLES.main}>{children}</main>
       {footer ? <Footer /> : null}
     </div>
   )

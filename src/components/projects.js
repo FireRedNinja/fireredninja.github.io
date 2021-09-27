@@ -1,8 +1,14 @@
-import React from 'react'
-import Project from './project'
-import projectsList from '../data/projectsList'
+import React, { useState } from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
-import { Tab, Tabs } from 'react-bootstrap'
+import projectsList from '../data/projectsList'
+import Project from './project'
+
+const personalProjects = projectsList.filter((project) =>
+  project.tags.includes('personal')
+)
+const hackathonProjects = projectsList.filter((project) =>
+  project.tags.includes('hackathon')
+)
 
 const buildProjectList = (projects, images) => {
   return projects.map((project) => {
@@ -47,32 +53,48 @@ const Projects = () => {
     }
   `)
   const images = data.image.edges
+  const projects = {
+    personal: buildProjectList(personalProjects, images),
+    hackathon: buildProjectList(hackathonProjects, images),
+  }
+  const [projectsList, setProjectsList] = useState(projects.personal)
+  const [projectType, setProjectType] = useState('personal')
+  const activeTabCss = 'border-b-2 border-blue-600'
+
+  const setActiveTab = (projectType) => {
+    if (projectType === 'personal') {
+      setProjectType('personal')
+      setProjectsList(projects.personal)
+    } else if (projectType === 'hackathon') {
+      setProjectType('hackathon')
+      setProjectsList(projects.hackathon)
+    }
+  }
 
   return (
     <div className="mt-12 mb-12">
-      <h2>Projects</h2>
-      <Tabs defaultActiveKey="personal">
-        <Tab eventKey="personal" title="Personal">
-          <div className="flex flex-col mt-2">
-            {buildProjectList(
-              projectsList.filter((project) =>
-                project.tags.includes('personal')
-              ),
-              images
-            )}
-          </div>
-        </Tab>
-        <Tab eventKey="hackathon" title="Hackathon">
-          <div className="flex flex-col mt-2">
-            {buildProjectList(
-              projectsList.filter((project) =>
-                project.tags.includes('hackathon')
-              ),
-              images
-            )}
-          </div>
-        </Tab>
-      </Tabs>
+      <h2 className="text-2xl font-bold pb-2">Projects</h2>
+      <div className="flex flex-row pb-2">
+        <button
+          type="button"
+          className={`text-center px-3 py-2 cursor-pointer mr-4 ${
+            projectType === 'personal' && activeTabCss
+          }`}
+          onClick={() => setActiveTab('personal')}
+        >
+          Personal
+        </button>
+        <button
+          type="button"
+          className={`text-center px-3 py-2 cursor-pointer ${
+            projectType === 'hackathon' && activeTabCss
+          }`}
+          onClick={() => setActiveTab('hackathon')}
+        >
+          Hackathon
+        </button>
+      </div>
+      <div className="flex flex-col mt-2">{projectsList}</div>
     </div>
   )
 }

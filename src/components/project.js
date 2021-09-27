@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faItchIo } from '@fortawesome/free-brands-svg-icons'
 import { GatsbyImage } from 'gatsby-plugin-image'
-import { Modal } from 'react-bootstrap'
-
-import { ModalStyles, ModalContentStyles } from './project.module.scss'
+import Modal from './modal'
 
 const iconMappings = {
   github: faGithub,
@@ -35,30 +33,26 @@ const Project = (props) => {
       {props.image && (
         <>
           <button
-            className="flex justify-center items-center rounded overflow-hidden max-h-32 md:max-h-56 hover:bg-gray-100 active:bg-green-700"
+            className="flex justify-center items-center rounded overflow-hidden max-h-32 mb-4 md:max-h-56 hover:bg-gray-100 active:bg-green-700"
             onClick={handleShow}
           >
             <GatsbyImage className="rounded" image={props.image} alt="" />
           </button>
-          <Modal
-            show={show}
-            onHide={handleClose}
-            centered
-            dialogClassName={ModalStyles}
-            contentClassName={ModalContentStyles}
-          >
-            <Modal.Body className="flex justify-center p-0">
-              <GatsbyImage image={props.image} alt="" />
-            </Modal.Body>
-          </Modal>
+          <div className={show ? 'visible' : 'hidden'}>
+            <Modal show={show} onHide={handleClose}>
+              <GatsbyImage className="rounded" image={props.image} alt="" />
+            </Modal>
+          </div>
         </>
       )}
       <div className="flex flex-col">
-        <div className="flex flex-col py-4">
+        <div className="flex flex-col">
           <h4>{props.title}</h4>
-          <p>{props.description}</p>
+          <p className="font-extralight">{props.description}</p>
         </div>
-        <div className="flex flex-row">{buildLinks(props.links)}</div>
+        {props.links.length != 0 && (
+          <div className="flex flex-row mt-4">{buildLinks(props.links)}</div>
+        )}
       </div>
     </div>
   )

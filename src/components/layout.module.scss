@@ -1,5 +1,16 @@
-.LayoutStyles {
+.Layout {
+  position: relative;
+  min-height: 100vh;
+}
+
+.main {
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 64rem;
+  padding-bottom: 12rem;
   @media (min-width: 640px) {
     max-width: 640px;
   }

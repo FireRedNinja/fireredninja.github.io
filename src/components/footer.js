@@ -6,15 +6,15 @@ import { FooterStyles } from './footer.module.scss'
 
 const Footer = (props) => (
   <footer
-    className={`flex content-center justify-center h-48 p-12 bg-gray-700 w-full absolute bottom-0 ${FooterStyles}`}
+    className={`flex content-center justify-center p-12 bg-gray-700 w-full absolute bottom-0 ${FooterStyles}`}
   >
     <a href="https://github.com/FireRedNinja" className="mx-2">
       <div className="flex flex-col">
         <FontAwesomeIcon
           icon={faGithub}
-          size="4x"
+          size="3x"
           color="white"
-          className="mx-8 mb-2"
+          className="mx-8"
         />
         <span className="text-gray-100 self-center">FireRedNinja</span>
       </div>
@@ -23,9 +23,9 @@ const Footer = (props) => (
       <div className="flex flex-col">
         <FontAwesomeIcon
           icon={faLinkedin}
-          size="4x"
+          size="3x"
           color="white"
-          className="mx-8 mb-2"
+          className="mx-8"
         />
         <span className="text-gray-100 self-center">Noel Rajan</span>
       </div>
