@@ -8,4 +8,8 @@
   }
   background-color: #ff9400;
   color: #ffffff;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #042759;
+  }
 }

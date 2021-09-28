@@ -1,0 +1,21 @@
+.Project {
+  border-color: #cdcdd7;
+  @media (prefers-color-scheme: dark) {
+    border-color: #48484a;
+  }
+  &__imgButton {
+    &:hover {
+      background-color: #f1f2f8;
+      @media (prefers-color-scheme: dark) {
+        background-color: #1d1b20;
+      }
+    }
+  }
+
+  &__subText {
+    color: #68697f;
+    @media (prefers-color-scheme: dark) {
+      color: #8e8e93;
+    }
+  }
+}

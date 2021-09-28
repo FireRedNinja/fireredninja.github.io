@@ -1,7 +1,38 @@
 .Project {
   color: #111236;
+  @media (prefers-color-scheme: dark) {
+    color: #fff;
+  }
 }
 
 .inactiveTab {
+  border-bottom-width: 2px;
   color: #68697f;
+  border-color: #fff;
+
+  &:hover {
+    color: #444560;
+    border-color: #cdcdd7;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: #636366;
+    border-color: #000;
+
+    &:hover {
+      color: #8e8e93;
+      border-color: #b2b2bf;
+    }
+  }
+}
+
+.activeTab {
+  border-bottom-width: 2px;
+  border-color: #0770e3;
+  color: #0770e3;
+
+  @media (prefers-color-scheme: dark) {
+    color: #6d9feb;
+    border-color: #6d9feb;
+  }
 }

@@ -60,8 +60,6 @@ const Projects = () => {
   };
   const [projectsList, setProjectsList] = useState(projects.personal);
   const [projectType, setProjectType] = useState('personal');
-  const activeTabCss = 'border-b-2 border-blue-600';
-  const inactiveTabCss = STYLES.inactiveTab;
 
   const setActiveTab = (projectType) => {
     if (projectType === 'personal') {
@@ -79,8 +77,8 @@ const Projects = () => {
       <div className="flex flex-row pb-2">
         <button
           type="button"
-          className={`text-center font-semibold px-3 py-2 cursor-pointer mr-4 hover:bg-gray-100 ${
-            projectType === 'personal' ? activeTabCss : inactiveTabCss
+          className={`text-center font-semibold px-3 py-2 cursor-pointer ${
+            projectType === 'personal' ? STYLES.activeTab : STYLES.inactiveTab
           }`}
           onClick={() => setActiveTab('personal')}
           aria-label="Personal projects tab"
@@ -89,8 +87,8 @@ const Projects = () => {
         </button>
         <button
           type="button"
-          className={`text-center font-semibold px-3 py-2 cursor-pointer hover:bg-gray-100 ${
-            projectType === 'hackathon' ? activeTabCss : inactiveTabCss
+          className={`text-center font-semibold px-3 py-2 cursor-pointer ${
+            projectType === 'hackathon' ? STYLES.activeTab : STYLES.inactiveTab
           }`}
           onClick={() => setActiveTab('hackathon')}
           aria-label="Hackathon projects tab"
