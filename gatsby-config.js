@@ -22,12 +22,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Noel Rajan`,
-        short_name: `Noel`,
+        name: `Noel Rajan's Portfolio`,
+        short_name: `Noel's Portfolio`,
         start_url: `/`,
-        background_color: `#ff9400`,
-        theme_color: `#ff9400`,
-        display: `minimal-ui`,
+        theme_color_in_head: false,
+        display: `browser`,
         icon: `src/images/code-icon.png`, // This path is relative to the root of the site.
       },
     },
