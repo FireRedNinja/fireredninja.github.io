@@ -17,11 +17,7 @@ const buildLinks = (links) =>
       className="mr-2"
       aria-label={link.name}
     >
-      <FontAwesomeIcon
-        className="text-black"
-        icon={iconMappings[link.name.toLowerCase()]}
-        size="2x"
-      />
+      <FontAwesomeIcon icon={iconMappings[link.name.toLowerCase()]} size="2x" />
     </button>
   ));
 

@@ -25,8 +25,8 @@ module.exports = {
         name: `Noel Rajan`,
         short_name: `Noel`,
         start_url: `/`,
-        background_color: `#374151`,
-        theme_color: `#374151`,
+        background_color: `#ff9400`,
+        theme_color: `#ff9400`,
         display: `minimal-ui`,
         icon: `src/images/code-icon.png`, // This path is relative to the root of the site.
       },
