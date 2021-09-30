@@ -1,23 +1,54 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useSpring, animated } from 'react-spring';
+
+import * as STYLES from './modal.module.scss';
 
 const Modal = ({ show, onHide, children }) => {
+  const modalRef = useRef();
+
+  const animation = useSpring({
+    config: {
+      duration: 150,
+    },
+    opacity: show ? 1 : 0,
+    transform: show ? `translateY(0%)` : `translateY(-20%)`,
+  });
+
+  const closeModal = (e) => {
+    if (modalRef.current === e.target) {
+      onHide();
+    }
+  };
+
+  const keyPress = useCallback(
+    (e) => {
+      if (e.key === 'Escape' && show) {
+        onHide();
+      }
+    },
+    [show, onHide]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyPress);
+    return () => document.removeEventListener('keydown', keyPress);
+  }, [keyPress]);
+
   return (
-    <div
-      className={`${
-        show ? 'visible' : 'hidden'
-      } block fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto z-10`}
-      onClick={() => onHide()}
-      onKeyPress={() => onHide()}
-    >
-      <div
-        className={`${
-          show ? 'visible' : 'hidden'
-        } bg-black opacity-75 fixed top-0 left-0 w-full h-full outline-none`}
-      ></div>
-      <div className="flex items-center relative w-auto pointer-events-none max-w-max my-8 mx-auto p-4">
-        {children}
-      </div>
-    </div>
+    <>
+      {show && (
+        <div
+          className={STYLES.Modal}
+          onClick={closeModal}
+          onKeyPress={() => onHide()}
+          ref={modalRef}
+        >
+          <animated.div style={animation}>
+            <div className={STYLES.Modal__wrapper}>{children}</div>
+          </animated.div>
+        </div>
+      )}
+    </>
   );
 };
 

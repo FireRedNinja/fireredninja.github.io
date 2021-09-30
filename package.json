@@ -5,9 +5,6 @@
   "version": "0.1.0",
   "author": "Noel Rajan",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-brands-svg-icons": "^5.15.4",
-    "@fortawesome/react-fontawesome": "^0.1.15",
     "gatsby": "^3.14.0",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-cname": "^1.0.0",
@@ -25,6 +22,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
+    "react-icons": "^4.2.0",
     "react-spring": "^9.2.4",
     "sass": "^1.42.1"
   },

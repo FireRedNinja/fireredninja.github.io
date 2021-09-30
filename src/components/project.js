@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faItchIo } from '@fortawesome/free-brands-svg-icons';
+import { FaGithub, FaItchIo } from 'react-icons/fa';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import Modal from './modal';
 
 import * as STYLES from './project.module.scss';
 
 const iconMappings = {
-  github: faGithub,
-  'itch.io': faItchIo,
+  github: FaGithub,
+  'itch.io': FaItchIo,
 };
 
 const buildLinks = (links) =>
-  links.map((link) => (
-    <button
-      href={link.link}
-      key={link.name}
-      className="mr-2"
-      aria-label={link.name}
-    >
-      <FontAwesomeIcon icon={iconMappings[link.name.toLowerCase()]} size="2x" />
-    </button>
-  ));
+  links.map((link) => {
+    const Icon = iconMappings[link.name.toLowerCase()];
+    return (
+      <button
+        href={link.link}
+        key={link.name}
+        className="mr-2"
+        aria-label={link.name}
+      >
+        <Icon size="2em" />
+      </button>
+    );
+  });
 
 const Project = (props) => {
   const [show, setShow] = useState(false);

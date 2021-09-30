@@ -1,4 +1,4 @@
-.FooterStyles {
+.Footer {
   a,
   a:hover,
   a:visited,
@@ -11,5 +11,10 @@
 
   @media (prefers-color-scheme: dark) {
     background-color: #042759;
+  }
+
+  &__link {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
   }
 }
