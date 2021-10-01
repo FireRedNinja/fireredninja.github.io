@@ -14,14 +14,14 @@ const buildLinks = (links) =>
   links.map((link) => {
     const Icon = iconMappings[link.name.toLowerCase()];
     return (
-      <button
+      <a
         href={link.link}
         key={link.name}
         className="mr-2"
-        aria-label={link.name}
+        // aria-label={link.name}
       >
         <Icon size="2em" />
-      </button>
+      </a>
     );
   });
 
