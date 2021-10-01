@@ -65,7 +65,7 @@ const hackathonProjects = [
   {
     title: 'Global Game Jam 2021: Island Dreams',
     description:
-      'A hackathon game about fixing your spaceship before the planet is destroyed. Made with GoDot',
+      'A hackathon game about fixing your spaceship before the planet is destroyed. Made with Unity',
     tags: ['hackathon'],
     image: 'islandDreams.png',
     links: [
