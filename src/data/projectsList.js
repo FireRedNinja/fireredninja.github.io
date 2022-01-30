@@ -64,8 +64,7 @@ let projectList = [
 const hackathonProjects = [
   {
     title: 'Global Game Jam 2022: God Complex',
-    description:
-      `"You've already made the choice. Now you have to understand it." - The Oracle. In God Complex you are a god-like being given the opportunity to create life. Will the choices you make help it grow and progress, or lead to its annihilation?`,
+    description: `"You've already made the choice. Now you have to understand it." - The Oracle. In God Complex you are a god-like being given the opportunity to create life. Will the choices you make help it grow and progress, or lead to its annihilation?`,
     tags: ['hackathon'],
     links: [
       {
