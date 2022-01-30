@@ -63,9 +63,25 @@ let projectList = [
 
 const hackathonProjects = [
   {
+    title: 'Global Game Jam 2022: God Complex',
+    description:
+      `"You've already made the choice. Now you have to understand it." - The Oracle. In God Complex you are a god-like being given the opportunity to create life. Will the choices you make help it grow and progress, or lead to its annihilation?`,
+    tags: ['hackathon'],
+    links: [
+      {
+        name: 'Github',
+        link: 'https://github.com/Yasmojam/ggj2022',
+      },
+      {
+        name: 'Github',
+        link: 'https://yasmojam.github.io/ggj2022/',
+      },
+    ],
+  },
+  {
     title: 'Global Game Jam 2021: Island Dreams',
     description:
-      'A hackathon game about fixing your spaceship before the planet is destroyed. Made with Unity',
+      'You are a survivor. Your plane has crashed and you have been lost to society! Stranded on a series of desert islands, you must solve simple puzzles and build a boat to leave the islands and find your way back to the world. Find materials to progress across the islands and achieve this goal!',
     tags: ['hackathon'],
     image: 'islandDreams.png',
     links: [
