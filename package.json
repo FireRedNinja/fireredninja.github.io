@@ -36,13 +36,13 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "npm run format && gatsby build",
+    "build": "yarn run format && gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write ./src",
-    "start": "npm run develop",
+    "start": "yarn run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
-    "deploy": "npm run build && rm public/CNAME && gh-pages -d public -b main",
+    "deploy": "yarn run build && rm public/CNAME && gh-pages -d public -b main",
     "ghhelp": "gh-pages --help"
   }
 }
