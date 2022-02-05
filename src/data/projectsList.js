@@ -4,7 +4,7 @@ let projectList = [
     description:
       'A Bot that watches live cryptocurrency prices and calculates when to buy/sell using technical analysis metrics and gives notifications through Discord',
     tags: ['personal'],
-    image: 'tradingBot.png',
+    image: 'tradingBot.webp',
     links: [],
   },
   {
@@ -12,7 +12,7 @@ let projectList = [
     description:
       'A Desktop Journal App inspired by the official 5 Minute Journal Book.',
     tags: ['personal'],
-    image: '5MinuteJournal.png',
+    image: '5MinuteJournal.webp',
     links: [
       {
         name: 'Github',
@@ -82,7 +82,7 @@ const hackathonProjects = [
     description:
       'You are a survivor. Your plane has crashed and you have been lost to society! Stranded on a series of desert islands, you must solve simple puzzles and build a boat to leave the islands and find your way back to the world. Find materials to progress across the islands and achieve this goal!',
     tags: ['hackathon'],
-    image: 'islandDreams.png',
+    image: 'islandDreams.webp',
     links: [
       {
         name: 'Github',
@@ -134,7 +134,7 @@ const hackathonProjects = [
     description:
       'A hackathon game about twins battling to collect ingredients to make jam the fastest. Made with Unity',
     tags: ['hackathon'],
-    image: 'gameJam.png',
+    image: 'gameJam.webp',
     links: [
       {
         name: 'Github',
@@ -151,7 +151,7 @@ const hackathonProjects = [
     description:
       'A hackathon game about 2 pigs trying to find their mum. Made with Unity',
     tags: ['hackathon'],
-    image: 'parkourPiggies.png',
+    image: 'parkourPiggies.webp',
     links: [
       {
         name: 'Github',
@@ -180,7 +180,7 @@ const hackathonProjects = [
     description:
       'A hackathon game about a virus infecting the network. Made with Unity',
     tags: ['hackathon'],
-    image: 'operationWire.png',
+    image: 'operationWire.webp',
     links: [
       {
         name: 'Github',

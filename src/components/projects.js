@@ -44,6 +44,7 @@ const Projects = () => {
               placeholder: DOMINANT_COLOR
               height: 500
               quality: 80
+              formats: [AUTO, WEBP, AVIF]
             )
             fluid {
               originalName
