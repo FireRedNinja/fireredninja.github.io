@@ -44,5 +44,6 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
     "deploy": "yarn run build && rm public/CNAME && gh-pages -d public -b main",
     "ghhelp": "gh-pages --help"
-  }
+  },
+  "packageManager": "yarn@3.2.2"
 }
