@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import projectsList from '../data/projectsList';
 import Project from './project';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import * as STYLES from './projects.module.scss';
+import { ThemeContext } from '../context/ThemeContext';
 
 const personalProjects = projectsList.filter((project) =>
   project.tags.includes('personal')
@@ -61,21 +62,43 @@ const Projects = () => {
     hackathon: buildProjectList(hackathonProjects, images),
   };
 
-  if (
-    localStorage?.theme === 'dark' ||
-    (!('theme' in localStorage) &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.theme = 'dark';
-  } else {
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.theme = 'light';
-  }
+  const useIsSsr = () => {
+    const [isSsr, setIsSsr] = useState(true);
+
+    useEffect(() => {
+      setIsSsr(false);
+    }, []);
+
+    return isSsr;
+  };
+
+  const isSsr = useIsSsr();
+
+  const startTheme = () => {
+    // if (
+    //   localStorage?.theme === 'dark' ||
+    //   (!('theme' in localStorage) &&
+    //     window.matchMedia('(prefers-color-scheme: dark)').matches)
+    // ) {
+    if (isSsr) {
+      return 'light';
+    }
+
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      // localStorage.theme = 'dark';
+      return 'dark';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      // localStorage.theme = 'light';
+      return 'light';
+    }
+  };
 
   const [projectsList, setProjectsList] = useState(projects.personal);
   const [projectType, setProjectType] = useState('personal');
-  const [theme, setTheme] = useState(localStorage.theme);
+  // const [theme, setTheme] = useState(startTheme());
+  const {theme, setTheme} = useContext(ThemeContext)
 
   const setActiveTab = (projectType) => {
     if (projectType === 'personal') {
@@ -89,12 +112,16 @@ const Projects = () => {
 
   const darkModeButtonOnClick = (event) => {
     if (theme === 'dark') {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.theme = 'light';
+      if (!isSsr) {
+        document.documentElement.removeAttribute('data-theme');
+      }
+      // localStorage.theme = 'light';
       setTheme('light');
     } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.theme = 'dark';
+      if (!isSsr) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      // localStorage.theme = 'dark';
       setTheme('dark');
     }
   };
