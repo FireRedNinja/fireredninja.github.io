@@ -1,10 +1,9 @@
 import React from 'react';
-import '../components/layout.css';
+import '../components/index.css';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import svg404 from '../images/undraw_page_not_found_su7k.svg';
-import '../components/layout.css';
 import { Link } from 'gatsby';
 
 const NotFoundPage = () => (

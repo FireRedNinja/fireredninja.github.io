@@ -1,6 +1,13 @@
+@use 'base';
+
 .Layout {
   position: relative;
   min-height: 100vh;
+  transition-duration: 0.5s;
+
+  @include base.dark-mode {
+    background-color: base.$background-dark-color;
+  }
 }
 
 .main {
@@ -11,6 +18,7 @@
   padding-right: 2rem;
   max-width: 64rem;
   padding-bottom: 12rem;
+
   @media (min-width: 640px) {
     max-width: 640px;
   }

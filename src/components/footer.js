@@ -3,7 +3,9 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 import * as STYLES from './footer.module.scss';
 
-const Footer = () => (
+const Footer = () => {
+
+  return (
   <footer
     className={`flex content-center justify-center p-8 w-full absolute bottom-0 ${STYLES.Footer}`}
   >
@@ -23,6 +25,6 @@ const Footer = () => (
       </div>
     </a>
   </footer>
-);
+)};
 
 export default Footer;

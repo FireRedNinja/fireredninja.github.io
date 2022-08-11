@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import projectsList from '../data/projectsList';
 import Project from './project';
+import { FaSun, FaMoon } from 'react-icons/fa';
 import * as STYLES from './projects.module.scss';
 
 const personalProjects = projectsList.filter((project) =>
@@ -59,8 +60,22 @@ const Projects = () => {
     personal: buildProjectList(personalProjects, images),
     hackathon: buildProjectList(hackathonProjects, images),
   };
+
+  if (
+    localStorage?.theme === 'dark' ||
+    (!('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.theme = 'dark';
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.theme = 'light';
+  }
+
   const [projectsList, setProjectsList] = useState(projects.personal);
   const [projectType, setProjectType] = useState('personal');
+  const [theme, setTheme] = useState(localStorage.theme);
 
   const setActiveTab = (projectType) => {
     if (projectType === 'personal') {
@@ -72,9 +87,26 @@ const Projects = () => {
     }
   };
 
+  const darkModeButtonOnClick = (event) => {
+    if (theme === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.theme = 'light';
+      setTheme('light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.theme = 'dark';
+      setTheme('dark');
+    }
+  };
+
   return (
-    <div className={`mt-12 mb-12 ${STYLES.Project}`}>
-      <h2 className="text-2xl font-bold pb-2">Projects</h2>
+    <div className={`mt-12 mb-12 ${STYLES.Projects}`}>
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-bold pb-2">Projects</h2>
+        <button onClick={darkModeButtonOnClick}>
+          {theme === 'dark' ? <FaMoon size="1.5em" /> : <FaSun size="1.5em" />}
+        </button>
+      </div>
       <div className="flex flex-row pb-2">
         <button
           type="button"

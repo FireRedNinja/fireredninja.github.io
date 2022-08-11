@@ -1,26 +1,29 @@
-.Project {
-  color: #111236;
-  @media (prefers-color-scheme: dark) {
-    color: #fff;
+@use 'base';
+
+.Projects {
+  color: base.$text-primary-dark-color;
+
+  @include base.dark-mode {
+    color: base.$text-primary-light-color;
   }
 }
 
 .inactiveTab {
   border-bottom-width: 2px;
-  color: #68697f;
+  color: base.$text-secondary-light-color;
   border-color: #fff;
 
   &:hover {
-    color: #444560;
+    color: base.$text-tertiary-light-color;
     border-color: #cdcdd7;
   }
 
-  @media (prefers-color-scheme: dark) {
-    color: #636366;
+  @include base.dark-mode {
+    color: base.$text-tertiary-dark-color;
     border-color: #000;
 
     &:hover {
-      color: #8e8e93;
+      color: base.$text-secondary-dark-color;
       border-color: #b2b2bf;
     }
   }
@@ -31,8 +34,8 @@
   border-color: #0770e3;
   color: #0770e3;
 
-  @media (prefers-color-scheme: dark) {
-    color: #6d9feb;
-    border-color: #6d9feb;
+  @include base.dark-mode {
+    color: base.$accent-dark-color;
+    border-color: base.$accent-dark-color;
   }
 }

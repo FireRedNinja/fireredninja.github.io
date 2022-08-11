@@ -1,0 +1,20 @@
+$light-mode-accent-color: #ff9400;
+$dark-mode-accent-color: #042759;
+
+$background-dark-color: #000;
+
+$text-primary-dark-color: #111236;
+$text-primary-light-color: #fff;
+$text-secondary-dark-color: #8e8e93;
+$text-secondary-light-color: #68697f;
+$text-tertiary-dark-color: #636366;
+$text-tertiary-light-color: #444560;
+
+$accent-color: #0770e3;
+$accent-dark-color: #6d9feb;
+
+@mixin dark-mode {
+  html[data-theme='dark'] & {
+    @content;
+  }
+}

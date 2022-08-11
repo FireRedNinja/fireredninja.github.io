@@ -1,19 +1,19 @@
+@use 'base';
+
 .Header {
   display: flex;
   align-content: center;
   justify-content: center;
   padding-top: 2rem;
   padding-bottom: 2rem;
-
-  background-color: #ff9400;
-  color: #ffffff;
+  color: base.$text-primary-light-color;
 
   // background: radial-gradient(circle, #ffb54d 10%, transparent 11%);
   // background-size: 2em 2em;
-  // background-color: #ff9400;
+  background-color: base.$light-mode-accent-color;
   // opacity: 0.75;
 
-  @media (prefers-color-scheme: dark) {
-    background-color: #042759;
+  @include base.dark-mode {
+    background-color: base.$dark-mode-accent-color;
   }
 }

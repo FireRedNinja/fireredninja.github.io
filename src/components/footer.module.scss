@@ -1,3 +1,5 @@
+@use 'base';
+
 .Footer {
   a,
   a:hover,
@@ -6,15 +8,16 @@
     color: inherit;
     text-decoration: none;
   }
-  background-color: #ff9400;
-  color: #ffffff;
-
-  @media (prefers-color-scheme: dark) {
-    background-color: #042759;
-  }
-
+  color: base.$text-primary-light-color;
+  
   &__link {
     margin-right: 0.5rem;
     margin-left: 0.5rem;
+  }
+
+  background-color: base.$light-mode-accent-color;
+
+  @include base.dark-mode {
+    background-color: base.$dark-mode-accent-color;
   }
 }
