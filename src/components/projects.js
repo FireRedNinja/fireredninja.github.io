@@ -127,7 +127,10 @@ const Projects = () => {
     <div className={STYLES.Projects}>
       <div className={STYLES.HeadingContainer}>
         <h2>Projects</h2>
-        <button onClick={darkModeButtonOnClick}>
+        <button
+          onClick={darkModeButtonOnClick}
+          className={STYLES.DarkModeToggle}
+        >
           {theme === 'dark' ? <FaMoon size="1.5em" /> : <FaSun size="1.5em" />}
         </button>
       </div>

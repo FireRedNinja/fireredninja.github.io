@@ -1,4 +1,5 @@
 @use 'base';
+@use 'sass:color';
 
 .Projects {
   margin-top: 3rem;
@@ -70,5 +71,22 @@
   @include base.dark-mode {
     color: base.$accent-dark-color;
     border-color: base.$accent-dark-color;
+  }
+}
+
+.DarkModeToggle {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+
+  &:hover {
+    background-color: color.scale(black, $lightness: 90%);
+
+    @include base.dark-mode {
+      background-color: color.scale(white, $lightness: -70%);
+    }
   }
 }
