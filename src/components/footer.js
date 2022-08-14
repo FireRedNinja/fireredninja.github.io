@@ -5,22 +5,17 @@ import * as STYLES from './footer.module.scss';
 
 const Footer = () => {
   return (
-    <footer
-      className={`flex content-center justify-center p-8 w-full absolute bottom-0 ${STYLES.Footer}`}
-    >
-      <a href="https://github.com/FireRedNinja" className={STYLES.Footer__link}>
-        <div className="flex flex-col items-center">
-          <FaGithub size="4em" />
-          <span className="pt-2 font-light self-center">FireRedNinja</span>
+    <footer className={STYLES.Footer}>
+      <a href="https://github.com/FireRedNinja" className={STYLES.Link}>
+        <div className={STYLES.Link__container}>
+          <FaGithub size="2em" />
+          <span className={STYLES.Link__container__text}>FireRedNinja</span>
         </div>
       </a>
-      <a
-        href="https://www.linkedin.com/in/noelrajan31"
-        className={STYLES.Footer__link}
-      >
-        <div className="flex flex-col items-center">
-          <FaLinkedin size="4em" />
-          <span className="pt-2 font-light self-center">Noel Rajan</span>
+      <a href="https://www.linkedin.com/in/noelrajan31" className={STYLES.Link}>
+        <div className={STYLES.Link__container}>
+          <FaLinkedin size="2em" />
+          <span className={STYLES.Link__container__text}>Noel Rajan</span>
         </div>
       </a>
     </footer>

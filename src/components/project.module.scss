@@ -6,7 +6,27 @@
     border-color: #48484a;
   }
 
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+
   &__imgButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.25rem;
+    overflow: hidden;
+    max-height: 8rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      max-height: 14rem;
+    }
+
     &:hover {
       background-color: #f1f2f8;
       @include base.dark-mode {
@@ -14,11 +34,46 @@
       }
     }
   }
+}
 
-  &__subText {
+.Image {
+  border-radius: 0.25rem;
+}
+
+.Popup {
+  &__visible {
+    visibility: visible;
+  }
+
+  &__hidden {
+    // display: none;
+    visibility: hidden; //could this work instead?
+  }
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-weight: 500;
+  }
+
+  p {
+    font-weight: 300;
     color: base.$text-secondary-light-color;
     @include base.dark-mode {
       color: base.$text-secondary-dark-color;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+
+    &__icon {
+      margin-right: 0.5rem;
     }
   }
 }

@@ -17,7 +17,7 @@ const buildLinks = (links) =>
       <a
         href={link.link}
         key={link.name}
-        className="mr-2"
+        className={STYLES.Content__links__icon}
         // aria-label={link.name}
       >
         <Icon size="2em" />
@@ -34,34 +34,32 @@ const Project = (props) => {
     e.stopPropagation();
   };
   return (
-    <div
-      className={`flex flex-col mb-4 border-solid border rounded p-6 ${STYLES.Project}`}
-    >
+    <div className={STYLES.Project}>
       {props.image && (
         <>
           <button
-            className={`flex justify-center items-center rounded overflow-hidden max-h-32 mb-4 md:max-h-56 ${STYLES.Project__imgButton}`}
+            className={STYLES.Project__imgButton}
             onClick={handleShow}
             aria-label={props.title}
           >
-            <GatsbyImage className="rounded" image={props.image} alt="" />
+            <GatsbyImage className={STYLES.Image} image={props.image} alt="" />
           </button>
-          <div className={show ? 'visible' : 'hidden'}>
+          <div className={show ? STYLES.Popup__visible : STYLES.Popup__hidden}>
             <Modal show={show} onHide={handleClose}>
-              <GatsbyImage className="rounded" image={props.image} alt="" />
+              <GatsbyImage
+                className={STYLES.Image}
+                image={props.image}
+                alt=""
+              />
             </Modal>
           </div>
         </>
       )}
-      <div className="flex flex-col">
-        <div className="flex flex-col">
-          <h3 className="font-medium">{props.title}</h3>
-          <p className={`font-light ${STYLES.Project__subText}`}>
-            {props.description}
-          </p>
-        </div>
+      <div className={STYLES.Content}>
+        <h3>{props.title}</h3>
+        <p>{props.description}</p>
         {props.links.length !== 0 && (
-          <div className="flex flex-row mt-4">{buildLinks(props.links)}</div>
+          <div className={STYLES.Content__links}>{buildLinks(props.links)}</div>
         )}
       </div>
     </div>

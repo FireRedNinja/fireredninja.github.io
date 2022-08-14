@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import projectsList from '../data/projectsList';
 import Project from './project';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import * as STYLES from './projects.module.scss';
-import { ThemeContext } from '../context/ThemeContext';
 
 const personalProjects = projectsList.filter((project) =>
   project.tags.includes('personal')
@@ -75,30 +74,27 @@ const Projects = () => {
   const isSsr = useIsSsr();
 
   const startTheme = () => {
-    // if (
-    //   localStorage?.theme === 'dark' ||
-    //   (!('theme' in localStorage) &&
-    //     window.matchMedia('(prefers-color-scheme: dark)').matches)
-    // ) {
     if (isSsr) {
       return 'light';
     }
-
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (
+      localStorage?.theme === 'dark' ||
+      (!('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
       document.documentElement.setAttribute('data-theme', 'dark');
-      // localStorage.theme = 'dark';
+      localStorage.theme = 'dark';
       return 'dark';
     } else {
       document.documentElement.removeAttribute('data-theme');
-      // localStorage.theme = 'light';
+      localStorage.theme = 'light';
       return 'light';
     }
   };
 
   const [projectsList, setProjectsList] = useState(projects.personal);
   const [projectType, setProjectType] = useState('personal');
-  // const [theme, setTheme] = useState(startTheme());
-  const {theme, setTheme} = useContext(ThemeContext)
+  const [theme, setTheme] = useState(startTheme());
 
   const setActiveTab = (projectType) => {
     if (projectType === 'personal') {
@@ -111,35 +107,36 @@ const Projects = () => {
   };
 
   const darkModeButtonOnClick = (event) => {
+    console.log(isSsr);
     if (theme === 'dark') {
       if (!isSsr) {
         document.documentElement.removeAttribute('data-theme');
+        localStorage.theme = 'light';
       }
-      // localStorage.theme = 'light';
       setTheme('light');
     } else {
       if (!isSsr) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.theme = 'dark';
       }
-      // localStorage.theme = 'dark';
       setTheme('dark');
     }
   };
 
   return (
-    <div className={`mt-12 mb-12 ${STYLES.Projects}`}>
-      <div className="flex justify-between">
-        <h2 className="text-2xl font-bold pb-2">Projects</h2>
+    <div className={STYLES.Projects}>
+      <div className={STYLES.HeadingContainer}>
+        <h2>Projects</h2>
         <button onClick={darkModeButtonOnClick}>
           {theme === 'dark' ? <FaMoon size="1.5em" /> : <FaSun size="1.5em" />}
         </button>
       </div>
-      <div className="flex flex-row pb-2">
+      <div className={STYLES.Tabs}>
         <button
           type="button"
-          className={`text-center font-semibold px-3 py-2 cursor-pointer ${
+          className={
             projectType === 'personal' ? STYLES.activeTab : STYLES.inactiveTab
-          }`}
+          }
           onClick={() => setActiveTab('personal')}
           aria-label="Personal projects tab"
         >
@@ -147,16 +144,16 @@ const Projects = () => {
         </button>
         <button
           type="button"
-          className={`text-center font-semibold px-3 py-2 cursor-pointer ${
+          className={
             projectType === 'hackathon' ? STYLES.activeTab : STYLES.inactiveTab
-          }`}
+          }
           onClick={() => setActiveTab('hackathon')}
           aria-label="Hackathon projects tab"
         >
           Hackathon
         </button>
       </div>
-      <div className="flex flex-col mt-2">{projectsList}</div>
+      <div className={STYLES.ProjectsListContainer}>{projectsList}</div>
     </div>
   );
 };

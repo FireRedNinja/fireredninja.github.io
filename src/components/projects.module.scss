@@ -1,11 +1,44 @@
 @use 'base';
 
 .Projects {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
   color: base.$text-primary-dark-color;
 
   @include base.dark-mode {
     color: base.$text-primary-light-color;
   }
+}
+
+.HeadingContainer {
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.Tabs {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 0.5rem;
+
+  button {
+    text-align: center;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+  }
+}
+
+.ProjectsListContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
 }
 
 .inactiveTab {

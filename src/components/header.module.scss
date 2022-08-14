@@ -7,13 +7,42 @@
   padding-top: 2rem;
   padding-bottom: 2rem;
   color: base.$text-primary-light-color;
+  transition: 0.5s;
 
   // background: radial-gradient(circle, #ffb54d 10%, transparent 11%);
   // background-size: 2em 2em;
   background-color: base.$light-mode-accent-color;
   // opacity: 0.75;
 
+  @media (min-width: 768px) {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
   @include base.dark-mode {
     background-color: base.$dark-mode-accent-color;
   }
+}
+
+.Container {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  padding-bottom: 0.5;
+}
+
+span {
+  display: flex;
+  flex: none;
+  justify-content: center;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 200;
 }
