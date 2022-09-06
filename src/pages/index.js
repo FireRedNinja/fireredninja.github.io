@@ -16,6 +16,5 @@ const IndexPage = () => (
     <Projects />
   </Layout>
 );
-};
 
 export default IndexPage;
