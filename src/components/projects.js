@@ -61,40 +61,46 @@ const Projects = () => {
     hackathon: buildProjectList(hackathonProjects, images),
   };
 
-  const useIsSsr = () => {
-    const [isSsr, setIsSsr] = useState(true);
-
-    useEffect(() => {
-      setIsSsr(false);
-    }, []);
-
-    return isSsr;
+  const setPageTheme = (mode) => {
+    if (mode === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.theme = 'dark';
+    } else if (mode === 'light') {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.removeItem('theme');
+    }
   };
 
-  const isSsr = useIsSsr();
-
-  const startTheme = () => {
-    if (isSsr) {
+  const getPageTheme = (ssr = false) => {
+    if (ssr) {
       return 'light';
     }
     if (
       localStorage?.theme === 'dark' ||
-      (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
+      window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.theme = 'dark';
+      setPageTheme('dark');
       return 'dark';
     } else {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.theme = 'light';
+      setPageTheme('light');
       return 'light';
     }
   };
 
+  const [isSsr, setIsSsr] = useState(true);
   const [projectsList, setProjectsList] = useState(projects.personal);
   const [projectType, setProjectType] = useState('personal');
-  const [theme, setTheme] = useState(startTheme());
+
+  const startTheme = getPageTheme(isSsr);
+  const [theme, setTheme] = useState(startTheme);
+
+  const useIsSsr = () => {
+    useEffect(() => {
+      const startTheme = getPageTheme(false);
+      setIsSsr(false);
+      setTheme(startTheme);
+    }, []);
+  };
 
   const setActiveTab = (projectType) => {
     if (projectType === 'personal') {
@@ -107,21 +113,20 @@ const Projects = () => {
   };
 
   const darkModeButtonOnClick = (event) => {
-    console.log(isSsr);
-    if (theme === 'dark') {
+    if (getPageTheme(isSsr) === 'dark') {
       if (!isSsr) {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.theme = 'light';
+        setPageTheme('light');
       }
       setTheme('light');
     } else {
       if (!isSsr) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.theme = 'dark';
+        setPageTheme('dark');
       }
       setTheme('dark');
     }
   };
+
+  useIsSsr();
 
   return (
     <div className={STYLES.Projects}>

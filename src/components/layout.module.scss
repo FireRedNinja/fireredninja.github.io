@@ -4,6 +4,7 @@
   position: relative;
   min-height: 100vh;
   transition-duration: 0.5s;
+  width: 100%;
 
   @include base.dark-mode {
     background-color: base.$background-dark-color;
@@ -11,14 +12,54 @@
 }
 
 .main {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  display: flex;
+  justify-content: center;
+
   padding-left: 2rem;
   padding-right: 2rem;
-  max-width: 64rem;
-  padding-bottom: 12rem;
+  padding-bottom: 2rem;
 
+  transition: 0.5s;
+
+  @media (min-width: 768px) {
+    padding-left: 5rem;
+    padding-right: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  @include base.dark-mode {
+    background-color: base.$background-dark-color;
+  }
+}
+
+.header_blend_main {
+  position: relative;
+  top: -2rem;
+  margin-bottom: -2rem;
+
+  background-color: white;
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
+
+  height: 2rem;
+  width: 100%;
+  content: '';
+  transition-duration: 0.5s;
+
+  @include base.dark-mode {
+    background-color: base.$background-dark-color;
+  }
+
+  @media (min-width: 768px) {
+    top: -5rem;
+    margin-bottom: -5rem;
+    height: 5rem;
+    border-top-right-radius: 5rem;
+    border-top-left-radius: 5rem;
+  }
+}
+
+.children {
   @media (min-width: 640px) {
     max-width: 640px;
   }

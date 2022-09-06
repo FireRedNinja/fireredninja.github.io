@@ -72,7 +72,7 @@ const hackathonProjects = [
         link: 'https://github.com/Yasmojam/ggj2022',
       },
       {
-        name: 'Github',
+        name: 'Game',
         link: 'https://yasmojam.github.io/ggj2022/',
       },
     ],
@@ -89,7 +89,7 @@ const hackathonProjects = [
         link: 'https://github.com/Yasmojam/GGJ21',
       },
       {
-        name: 'itch.io',
+        name: 'Game',
         link: 'https://dasha1362.itch.io/island-dream',
       },
     ],
@@ -141,7 +141,7 @@ const hackathonProjects = [
         link: 'https://github.com/dasha1362/GUDEV5',
       },
       {
-        name: 'itch.io',
+        name: 'Game',
         link: 'https://dasha1362.itch.io/game-jam',
       },
     ],
@@ -158,7 +158,7 @@ const hackathonProjects = [
         link: 'https://github.com/dasha1362/gudev4-deceit',
       },
       {
-        name: 'itch.io',
+        name: 'Game',
         link: 'https://dasha1362.itch.io/parkour-piggies',
       },
     ],
@@ -187,7 +187,7 @@ const hackathonProjects = [
         link: 'https://github.com/DevdudeSami/GUEmail_GGJ',
       },
       {
-        name: 'itch.io',
+        name: 'Game',
         link: 'https://dasha1362.itch.io/operation-wire',
       },
     ],

@@ -2,12 +2,15 @@
 @use 'sass:color';
 
 .Projects {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: base.$text-primary-dark-color;
 
   @include base.dark-mode {
     color: base.$text-primary-light-color;
+  }
+
+  @media (min-width: 768px) {
+    margin-bottom: 1rem;
   }
 }
 
@@ -86,7 +89,7 @@
     background-color: color.scale(black, $lightness: 90%);
 
     @include base.dark-mode {
-      background-color: color.scale(white, $lightness: -70%);
+      background-color: color.scale(white, $lightness: -90%);
     }
   }
 }

@@ -15,7 +15,10 @@ const Layout = ({ header = true, footer = true, children }) => {
   return (
     <div className={STYLES.Layout}>
       {header ? <Header /> : null}
-      <main className={STYLES.main}>{children}</main>
+      <div className={STYLES.header_blend_main} />
+      <main className={STYLES.main}>
+        <div className={STYLES.children}>{children}</div>
+      </main>
       {footer ? <Footer /> : null}
     </div>
   );

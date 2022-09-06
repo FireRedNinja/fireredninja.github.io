@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaGithub, FaItchIo } from 'react-icons/fa';
+import { FaGithub, FaGamepad } from 'react-icons/fa';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import Modal from './modal';
 
@@ -7,7 +7,7 @@ import * as STYLES from './project.module.scss';
 
 const iconMappings = {
   github: FaGithub,
-  'itch.io': FaItchIo,
+  game: FaGamepad,
 };
 
 const buildLinks = (links) =>

@@ -11,15 +11,20 @@
   display: flex;
   align-content: center;
   justify-content: center;
+
   padding: 2rem;
   width: 100%;
-  position: absolute; // is this needed?
+
   bottom: 0px;
   color: base.$text-primary-light-color;
   background-color: base.$light-mode-accent-color;
 
   @include base.dark-mode {
     background-color: base.$dark-mode-accent-color;
+  }
+
+  @media (min-width: 768px) {
+    padding: 5rem;
   }
 }
 
@@ -37,5 +42,21 @@
       font-weight: 300;
       align-self: center;
     }
+  }
+}
+
+.LinksContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+
+  @media (min-width: 640px) {
+    max-width: 640px;
+  }
+  @media (min-width: 768px) {
+    max-width: 768px;
+  }
+  @media (min-width: 1024px) {
+    max-width: 1024px;
   }
 }
