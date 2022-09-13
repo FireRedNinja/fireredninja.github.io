@@ -64,10 +64,8 @@ const Projects = () => {
   const setPageTheme = (mode) => {
     if (mode === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.theme = 'dark';
     } else if (mode === 'light') {
       document.documentElement.removeAttribute('data-theme');
-      localStorage.removeItem('theme');
     }
   };
 
@@ -75,10 +73,7 @@ const Projects = () => {
     if (ssr) {
       return 'light';
     }
-    if (
-      localStorage?.theme === 'dark' ||
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setPageTheme('dark');
       return 'dark';
     } else {
