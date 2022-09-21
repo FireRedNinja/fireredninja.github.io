@@ -9,8 +9,8 @@ const Footer = () => {
       <div className={STYLES.LinksContainer}>
         <a href="https://github.com/FireRedNinja" className={STYLES.Link}>
           <div className={STYLES.Link__container}>
-            <FaGithub size="2em" />
-            <span className={STYLES.Link__container__text}>FireRedNinja</span>
+            <FaGithub size="3em" />
+            {/* <span className={STYLES.Link__container__text}>FireRedNinja</span> */}
           </div>
         </a>
         <a
@@ -18,8 +18,8 @@ const Footer = () => {
           className={STYLES.Link}
         >
           <div className={STYLES.Link__container}>
-            <FaLinkedin size="2em" />
-            <span className={STYLES.Link__container__text}>Noel Rajan</span>
+            <FaLinkedin size="3em" />
+            {/* <span className={STYLES.Link__container__text}>Noel Rajan</span> */}
           </div>
         </a>
       </div>
