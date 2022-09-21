@@ -25,7 +25,7 @@ const DarkModeButton = () => {
     }
   };
 
-  const startTheme = getPageTheme(isSsr);
+  const startTheme = getPageTheme(true);
   const [isSsr, setIsSsr] = useState(true);
   const [theme, setTheme] = useState(startTheme);
 
