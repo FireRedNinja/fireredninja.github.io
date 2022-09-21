@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import projectsList from '../data/projectsList';
 import Project from './project';
-import { FaSun, FaMoon } from 'react-icons/fa';
 import * as STYLES from './projects.module.scss';
+import DarkModeButton from './darkModeButton';
 
 const personalProjects = projectsList.filter((project) =>
   project.tags.includes('personal')
@@ -61,41 +61,8 @@ const Projects = () => {
     hackathon: buildProjectList(hackathonProjects, images),
   };
 
-  const setPageTheme = (mode) => {
-    if (mode === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else if (mode === 'light') {
-      document.documentElement.removeAttribute('data-theme');
-    }
-  };
-
-  const getPageTheme = (ssr = false) => {
-    if (ssr) {
-      return 'light';
-    }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setPageTheme('dark');
-      return 'dark';
-    } else {
-      setPageTheme('light');
-      return 'light';
-    }
-  };
-
-  const [isSsr, setIsSsr] = useState(true);
   const [projectsList, setProjectsList] = useState(projects.personal);
   const [projectType, setProjectType] = useState('personal');
-
-  const startTheme = getPageTheme(isSsr);
-  const [theme, setTheme] = useState(startTheme);
-
-  const useIsSsr = () => {
-    useEffect(() => {
-      const startTheme = getPageTheme(false);
-      setIsSsr(false);
-      setTheme(startTheme);
-    }, []);
-  };
 
   const setActiveTab = (projectType) => {
     if (projectType === 'personal') {
@@ -107,32 +74,11 @@ const Projects = () => {
     }
   };
 
-  const darkModeButtonOnClick = (event) => {
-    if (getPageTheme(isSsr) === 'dark') {
-      if (!isSsr) {
-        setPageTheme('light');
-      }
-      setTheme('light');
-    } else {
-      if (!isSsr) {
-        setPageTheme('dark');
-      }
-      setTheme('dark');
-    }
-  };
-
-  useIsSsr();
-
   return (
     <div className={STYLES.Projects}>
       <div className={STYLES.HeadingContainer}>
         <h2>Projects</h2>
-        <button
-          onClick={darkModeButtonOnClick}
-          className={STYLES.DarkModeToggle}
-        >
-          {theme === 'dark' ? <FaMoon size="1.5em" /> : <FaSun size="1.5em" />}
-        </button>
+        <DarkModeButton />
       </div>
       <div className={STYLES.Tabs}>
         <button

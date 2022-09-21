@@ -1,9 +1,10 @@
 @use 'base';
-@use 'sass:color';
 
 .Projects {
   margin-bottom: 1rem;
   color: base.$text-primary-dark-color;
+  // transition-duration: 2s;
+  // transition-timing-function: ease-in;
 
   @include base.dark-mode {
     color: base.$text-primary-light-color;
@@ -74,22 +75,5 @@
   @include base.dark-mode {
     color: base.$accent-dark-color;
     border-color: base.$accent-dark-color;
-  }
-}
-
-.DarkModeToggle {
-  display: flex;
-  width: 2rem;
-  height: 2rem;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.25rem;
-
-  &:hover {
-    background-color: color.scale(black, $lightness: 90%);
-
-    @include base.dark-mode {
-      background-color: color.scale(white, $lightness: -90%);
-    }
   }
 }
