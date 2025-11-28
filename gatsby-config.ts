@@ -1,11 +1,15 @@
-module.exports = {
+import type { GatsbyConfig } from "gatsby";
+
+const config: GatsbyConfig = {
   siteMetadata: {
     title: `Noel Rajan's Portfolio`,
+    description: `Software Engineer portfolio showcasing personal and hackathon projects`,
     author: `Noel Rajan`,
-    siteUrl: `https://fireredninja.github.io/`
+    siteUrl: `https://fireredninja.github.io/`,
   },
+  graphqlTypegen: true,
+  trailingSlash: "always",
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -18,7 +22,6 @@ module.exports = {
     `gatsby-plugin-cname`,
     `gatsby-plugin-postcss`,
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -27,12 +30,10 @@ module.exports = {
         start_url: `/`,
         theme_color_in_head: false,
         display: `browser`,
-        
-        icon: `src/images/terminal.svg`, // This path is relative to the root of the site.
+        icon: `src/images/terminal.svg`,
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
   ],
-}
+};
+
+export default config;
