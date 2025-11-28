@@ -25,9 +25,9 @@ const Skills: React.FC = () => {
 
   return (
     <section
-      id="about"
+      id="skills"
       className="bg-bg-muted-light py-24 px-4 dark:bg-bg-muted-dark"
-      aria-labelledby="about-heading"
+      aria-labelledby="skills-heading"
     >
       <div className="mx-auto max-w-6xl">
         <motion.div
@@ -37,7 +37,7 @@ const Skills: React.FC = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           <h2
-            id="about-heading"
+            id="skills-heading"
             className="mb-4 text-3xl font-bold text-text-primary dark:text-text-primary-dark sm:text-4xl"
           >
             Skills
@@ -59,33 +59,45 @@ const Skills: React.FC = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-50px" }}
                 >
-                  <h3 className="mb-2 text-xl font-semibold text-text-secondary dark:text-text-secondary-dark">
+                  <h3 className="mb-4 text-xl font-semibold text-text-primary dark:text-text-primary-dark">
                     {category.label}
                   </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {categorySkills.map((skill) => (
-                      <Tooltip key={skill.name} delayDuration={200}>
-                        <TooltipTrigger asChild>
-                          <motion.div
-                            variants={staggerChild}
-                            whileHover={hoverScale}
-                            whileFocus={hoverScale}
-                          >
-                            <Badge
-                              variant="default"
-                              tabIndex={0}
-                              aria-label={skill.name}
-                            >
-                              {skill.name}
-                            </Badge>
-                          </motion.div>
-                        </TooltipTrigger>
-                        <TooltipContent side="top" align="center">
-                          {skill.description}
-                        </TooltipContent>
-                      </Tooltip>
-                    ))}
-                  </div>
+                  <motion.ul
+                    className="flex flex-wrap gap-3"
+                    variants={staggerContainer}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                    role="list"
+                    aria-label={`${category.label} skills`}
+                  >
+                    {categorySkills.map((skill) => {
+                      const Icon = skill.icon;
+                      return (
+                        <motion.li key={skill.name} variants={staggerChild}>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <motion.div {...hoverScale}>
+                                <Badge
+                                  variant="secondary"
+                                  className="cursor-default gap-2 px-4 py-2 text-base"
+                                >
+                                  <Icon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                  <span>{skill.name}</span>
+                                </Badge>
+                              </motion.div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{skill.description}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </motion.li>
+                      );
+                    })}
+                  </motion.ul>
                 </motion.div>
               );
             })}

@@ -16,12 +16,7 @@ export const navItems = [
     href: "#projects",
     ariaLabel: "Navigate to projects section",
   },
-  { label: "About", href: "#about", ariaLabel: "Navigate to about section" },
-  {
-    label: "Contact",
-    href: "#contact",
-    ariaLabel: "Navigate to contact section",
-  },
+  { label: "Skills", href: "#skills", ariaLabel: "Navigate to skills section" },
 ] as const;
 
 export type NavItem = (typeof navItems)[number];
