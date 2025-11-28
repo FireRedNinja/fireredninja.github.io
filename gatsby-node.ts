@@ -13,10 +13,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   // Fix framer-motion and react-icons SSR issues
   if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
-      externals: [
-        /^framer-motion/,
-        /^react-icons/,
-      ],
+      externals: [/^framer-motion/, /^react-icons/],
     });
   }
 
