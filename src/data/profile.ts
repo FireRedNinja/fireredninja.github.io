@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { IconType } from "react-icons";
 
 export interface SocialLink {
@@ -13,7 +13,6 @@ export interface Profile {
   firstName: string;
   role: string;
   location: string;
-  email: string;
   socialLinks: SocialLink[];
 }
 
@@ -22,7 +21,6 @@ export const profile: Profile = {
   firstName: "Noel",
   role: "Software Engineer",
   location: "United Kingdom",
-  email: "hello@noelrajan.com",
   socialLinks: [
     {
       name: "GitHub",

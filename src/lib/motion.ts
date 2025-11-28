@@ -3,7 +3,7 @@ import {
   Variants,
   Transition,
   useReducedMotion as useFramerReducedMotion,
-} from "framer-motion";
+} from "motion/react";
 
 /**
  * Hook to detect if user prefers reduced motion

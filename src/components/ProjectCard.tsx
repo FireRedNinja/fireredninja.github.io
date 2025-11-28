@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Github, Gamepad2, ExternalLink } from "lucide-react";
 import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import {

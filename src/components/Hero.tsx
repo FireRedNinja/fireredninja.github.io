@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ArrowDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { profile } from "../data";
@@ -35,14 +35,6 @@ const Hero: React.FC = () => {
         initial="hidden"
         animate="visible"
       >
-        {/* Greeting */}
-        <motion.p
-          variants={staggerChild}
-          className="mb-4 text-lg font-medium text-accent-orange dark:text-accent-orange-dark"
-        >
-          Hello, I&apos;m
-        </motion.p>
-
         {/* Name - H1 for SEO and accessibility */}
         <motion.h1
           id="hero-heading"
