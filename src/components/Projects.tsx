@@ -89,8 +89,8 @@ const Projects = () => {
           type="button"
           className={`cursor-pointer border-b-2 px-3 py-2 text-center font-semibold ${
             projectType === "personal"
-              ? "border-accent-blue text-accent-blue dark:border-accent-blue-dark dark:text-accent-blue-dark"
-              : "border-white text-text-secondary hover:border-border-light hover:text-text-tertiary dark:border-black dark:text-text-tertiary-dark dark:hover:border-border-hover-light dark:hover:text-text-secondary-dark"
+              ? "border-accent-orange text-accent-orange dark:border-accent-orange-dark dark:text-accent-orange-dark"
+              : "border-transparent text-text-secondary hover:border-border-light hover:text-text-tertiary dark:text-text-tertiary-dark dark:hover:border-border-hover-dark dark:hover:text-text-secondary-dark"
           }`}
           onClick={() => setProjectType("personal")}
           aria-label="Personal projects tab"
@@ -101,8 +101,8 @@ const Projects = () => {
           type="button"
           className={`cursor-pointer border-b-2 px-3 py-2 text-center font-semibold ${
             projectType === "hackathon"
-              ? "border-accent-blue text-accent-blue dark:border-accent-blue-dark dark:text-accent-blue-dark"
-              : "border-white text-text-secondary hover:border-border-light hover:text-text-tertiary dark:border-black dark:text-text-tertiary-dark dark:hover:border-border-hover-light dark:hover:text-text-secondary-dark"
+              ? "border-accent-orange text-accent-orange dark:border-accent-orange-dark dark:text-accent-orange-dark"
+              : "border-transparent text-text-secondary hover:border-border-light hover:text-text-tertiary dark:text-text-tertiary-dark dark:hover:border-border-hover-dark dark:hover:text-text-secondary-dark"
           }`}
           onClick={() => setProjectType("hackathon")}
           aria-label="Hackathon projects tab"

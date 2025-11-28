@@ -10,7 +10,7 @@ const NotFound = () => {
       </div>
       <Link to="/" className="mt-8 w-full">
         <button
-          className="w-full rounded-sm bg-accent-blue px-4 py-2 text-center font-bold text-white hover:bg-accent-blue-hover"
+          className="w-full rounded-sm bg-accent-orange px-4 py-2 text-center font-bold text-white hover:bg-accent-orange-hover dark:bg-accent-orange-dark dark:text-text-primary dark:hover:bg-accent-orange-dark-hover"
           aria-label="Go back home"
         >
           Go Back Home

@@ -1,11 +1,16 @@
 import React from "react";
 import type { HeadFC } from "gatsby";
 import Layout from "../components/Layout";
-import Projects from "../components/Projects";
+import Hero from "../components/Hero";
+import ProjectsSection from "../components/ProjectsSection";
+import Skills from "../components/Skills";
+import { profile } from "../data";
 
-const IndexPage = () => (
+const IndexPage: React.FC = () => (
   <Layout>
-    <Projects />
+    <Hero />
+    <ProjectsSection />
+    <Skills />
   </Layout>
 );
 
@@ -13,15 +18,17 @@ export default IndexPage;
 
 export const Head: HeadFC = () => (
   <>
-    <title>Home | Noel Rajan's Portfolio</title>
+    <title>
+      {profile.name} | {profile.role}
+    </title>
     <meta
       name="description"
-      content="Software Engineer portfolio showcasing personal and hackathon projects"
+      content={`${profile.name} - ${profile.role}. ${profile.bio}`}
     />
-    <meta property="og:title" content="Noel Rajan's Portfolio" />
+    <meta property="og:title" content={`${profile.name} | ${profile.role}`} />
     <meta
       property="og:description"
-      content="Software Engineer portfolio showcasing personal and hackathon projects"
+      content={`${profile.name} - ${profile.role}. ${profile.bio}`}
     />
     <meta property="og:type" content="website" />
     <html lang="en" />

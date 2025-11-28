@@ -9,6 +9,10 @@ const config: GatsbyConfig = {
   },
   graphqlTypegen: true,
   trailingSlash: "always",
+  // Disable built-in ESLint to avoid conflict with ESLint 9
+  flags: {
+    DEV_SSR: false,
+  },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,

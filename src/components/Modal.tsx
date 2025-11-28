@@ -6,20 +6,56 @@ import React, {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
+import { Button } from "./ui/button";
+import {
+  useReducedMotion,
+  getBackdropVariants,
+  getModalContentVariants,
+} from "../lib/motion";
 
 interface ModalProps {
   show: boolean;
   onHide: () => void;
   children: ReactNode;
+  title?: string;
 }
 
-const Modal = ({ show, onHide, children }: ModalProps) => {
+const Modal: React.FC<ModalProps> = ({ show, onHide, children, title }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const reducedMotion = useReducedMotion();
+
+  const backdropVariants = getBackdropVariants(reducedMotion);
+  const contentVariants = getModalContentVariants(reducedMotion);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Store previous focus and focus close button when modal opens
+  useEffect(() => {
+    if (show) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
+      // Small delay to ensure modal is rendered
+      setTimeout(() => {
+        closeButtonRef.current?.focus();
+      }, 50);
+      // Prevent body scroll
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore body scroll
+      document.body.style.overflow = "";
+      // Restore focus to previous element
+      previousFocusRef.current?.focus();
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [show]);
 
   const closeModal = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (modalRef.current === e.target) {
@@ -50,22 +86,38 @@ const Modal = ({ show, onHide, children }: ModalProps) => {
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black/80 outline-2 outline-transparent outline-offset-2"
+          variants={backdropVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black/80"
           onClick={closeModal}
           ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={title ? `Image preview: ${title}` : "Image preview"}
         >
           <motion.div
-            initial={{ opacity: 0, y: "-20%" }}
-            animate={{ opacity: 1, y: "0%" }}
-            exit={{ opacity: 0, y: "-20%" }}
-            transition={{ duration: 0.15 }}
-            className="relative flex w-auto max-w-max items-center justify-center p-4"
+            variants={contentVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="relative flex w-auto max-w-[90vw] max-h-[90vh] items-center justify-center p-4"
           >
-            {children}
+            {/* Close button */}
+            <Button
+              ref={closeButtonRef}
+              variant="ghost"
+              size="icon"
+              onClick={onHide}
+              className="absolute -top-2 -right-2 z-10 rounded-full bg-bg-card-light/90 text-text-primary shadow-lg hover:bg-bg-card-light dark:bg-bg-card-dark/90 dark:text-text-primary-dark dark:hover:bg-bg-card-dark"
+              aria-label="Close image preview"
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
+            </Button>
+
+            {/* Content */}
+            <div className="overflow-hidden rounded-lg">{children}</div>
           </motion.div>
         </motion.div>
       )}

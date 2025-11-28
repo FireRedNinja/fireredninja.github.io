@@ -1,6 +1,7 @@
 export interface ProjectLink {
   name: "Github" | "Game";
   link: string;
+  ariaLabel: string;
 }
 
 export interface Project {
@@ -8,7 +9,23 @@ export interface Project {
   description: string;
   tags: ("personal" | "hackathon")[];
   image?: string;
+  imageAlt?: string;
   links: ProjectLink[];
+}
+
+/**
+ * Helper to create a project link with auto-generated aria label
+ */
+function createLink(
+  name: "Github" | "Game",
+  link: string,
+  projectTitle: string
+): ProjectLink {
+  const ariaLabel =
+    name === "Github"
+      ? `View source code for ${projectTitle} on GitHub, opens in new tab`
+      : `Play ${projectTitle} game, opens in new tab`;
+  return { name, link, ariaLabel };
 }
 
 const personalProjects: Project[] = [
@@ -18,6 +35,8 @@ const personalProjects: Project[] = [
       "A Bot that watches live cryptocurrency prices and calculates when to buy/sell using technical analysis metrics and gives notifications through Discord",
     tags: ["personal"],
     image: "tradingBot.webp",
+    imageAlt:
+      "Screenshot of Trading Bot dashboard showing cryptocurrency price charts and trading signals",
     links: [],
   },
   {
@@ -26,11 +45,14 @@ const personalProjects: Project[] = [
       "A Desktop Journal App inspired by the official 5 Minute Journal Book.",
     tags: ["personal"],
     image: "5MinuteJournal.webp",
+    imageAlt:
+      "Screenshot of 5 Minute Journal app showing the daily journaling interface",
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/FireRedNinja/5-minute-journal",
-      },
+      createLink(
+        "Github",
+        "https://github.com/FireRedNinja/5-minute-journal",
+        "5 Minute Journal"
+      ),
     ],
   },
   {
@@ -39,10 +61,11 @@ const personalProjects: Project[] = [
       "An Android App to catch up on daily news feeds such as Hacker News, Product Hunt and GitHub Trending Repositories",
     tags: ["personal"],
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/FireRedNinja/catch_up",
-      },
+      createLink(
+        "Github",
+        "https://github.com/FireRedNinja/catch_up",
+        "Catch Up"
+      ),
     ],
   },
   {
@@ -51,11 +74,14 @@ const personalProjects: Project[] = [
       "A Firefox New Tab Dashboard that shows favourite links and uses the Mapbox API to generate a topographic map for a Munro (Scottish Mountain)",
     tags: ["personal"],
     image: "greetings.jpg",
+    imageAlt:
+      "Screenshot of Greetings Firefox extension showing a topographic map dashboard",
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/FireRedNinja/dashboard-extension",
-      },
+      createLink(
+        "Github",
+        "https://github.com/FireRedNinja/dashboard-extension",
+        "Greetings"
+      ),
     ],
   },
   {
@@ -73,14 +99,12 @@ const hackathonProjects: Project[] = [
     description: `"You've already made the choice. Now you have to understand it." - The Oracle. In God Complex you are a god-like being given the opportunity to create life. Will the choices you make help it grow and progress, or lead to its annihilation?`,
     tags: ["hackathon"],
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/Yasmojam/ggj2022",
-      },
-      {
-        name: "Game",
-        link: "https://yasmojam.github.io/ggj2022/",
-      },
+      createLink(
+        "Github",
+        "https://github.com/Yasmojam/ggj2022",
+        "God Complex"
+      ),
+      createLink("Game", "https://yasmojam.github.io/ggj2022/", "God Complex"),
     ],
   },
   {
@@ -89,15 +113,19 @@ const hackathonProjects: Project[] = [
       "You are a survivor. Your plane has crashed and you have been lost to society! Stranded on a series of desert islands, you must solve simple puzzles and build a boat to leave the islands and find your way back to the world. Find materials to progress across the islands and achieve this goal!",
     tags: ["hackathon"],
     image: "islandDreams.webp",
+    imageAlt:
+      "Screenshot of Island Dreams game showing a tropical island environment",
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/Yasmojam/GGJ21",
-      },
-      {
-        name: "Game",
-        link: "https://dasha1362.itch.io/island-dream",
-      },
+      createLink(
+        "Github",
+        "https://github.com/Yasmojam/GGJ21",
+        "Island Dreams"
+      ),
+      createLink(
+        "Game",
+        "https://dasha1362.itch.io/island-dream",
+        "Island Dreams"
+      ),
     ],
   },
   {
@@ -106,10 +134,11 @@ const hackathonProjects: Project[] = [
       "A hackathon game about fixing your spaceship before the planet is destroyed. Made with GoDot",
     tags: ["hackathon"],
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/Yasmojam/GlobalGameJam2020",
-      },
+      createLink(
+        "Github",
+        "https://github.com/Yasmojam/GlobalGameJam2020",
+        "Global Game Jam 2020"
+      ),
     ],
   },
   {
@@ -117,10 +146,11 @@ const hackathonProjects: Project[] = [
     description: "A hackathon entry for making an AI to play MS Tanks",
     tags: ["hackathon"],
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/Yasmojam/DoYouHaveTheGuts2019",
-      },
+      createLink(
+        "Github",
+        "https://github.com/Yasmojam/DoYouHaveTheGuts2019",
+        "Tim Scorer 2.0"
+      ),
     ],
   },
   {
@@ -128,12 +158,7 @@ const hackathonProjects: Project[] = [
     description:
       "A hackathon game about a hermit crab finding new homes when outgrows its old one. Made with Unity",
     tags: ["hackathon"],
-    links: [
-      {
-        name: "Github",
-        link: "https://github.com/Iain530/GGJ19",
-      },
-    ],
+    links: [createLink("Github", "https://github.com/Iain530/GGJ19", "Hermit")],
   },
   {
     title: "GUDEV February 2019 Game Jam - Game: Jam",
@@ -141,15 +166,11 @@ const hackathonProjects: Project[] = [
       "A hackathon game about twins battling to collect ingredients to make jam the fastest. Made with Unity",
     tags: ["hackathon"],
     image: "gameJam.webp",
+    imageAlt:
+      "Screenshot of Game: Jam showing the twin characters collecting ingredients",
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/dasha1362/GUDEV5",
-      },
-      {
-        name: "Game",
-        link: "https://dasha1362.itch.io/game-jam",
-      },
+      createLink("Github", "https://github.com/dasha1362/GUDEV5", "Game: Jam"),
+      createLink("Game", "https://dasha1362.itch.io/game-jam", "Game: Jam"),
     ],
   },
   {
@@ -158,15 +179,19 @@ const hackathonProjects: Project[] = [
       "A hackathon game about 2 pigs trying to find their mum. Made with Unity",
     tags: ["hackathon"],
     image: "parkourPiggies.webp",
+    imageAlt:
+      "Screenshot of Parkour Piggies game showing pig characters in a platforming level",
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/dasha1362/gudev4-deceit",
-      },
-      {
-        name: "Game",
-        link: "https://dasha1362.itch.io/parkour-piggies",
-      },
+      createLink(
+        "Github",
+        "https://github.com/dasha1362/gudev4-deceit",
+        "Parkour Piggies"
+      ),
+      createLink(
+        "Game",
+        "https://dasha1362.itch.io/parkour-piggies",
+        "Parkour Piggies"
+      ),
     ],
   },
   {
@@ -175,10 +200,11 @@ const hackathonProjects: Project[] = [
       "A hackathon game about salvaging treasure from the ocean floor while avoiding creatures. Made with GoDot",
     tags: ["hackathon"],
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/pmaitland/GUDEV_GameJam_Email-",
-      },
+      createLink(
+        "Github",
+        "https://github.com/pmaitland/GUDEV_GameJam_Email-",
+        "Salvage"
+      ),
     ],
   },
   {
@@ -187,15 +213,19 @@ const hackathonProjects: Project[] = [
       "A hackathon game about a virus infecting the network. Made with Unity",
     tags: ["hackathon"],
     image: "operationWire.webp",
+    imageAlt:
+      "Screenshot of Operation Wire game showing a network visualization with virus spreading",
     links: [
-      {
-        name: "Github",
-        link: "https://github.com/DevdudeSami/GUEmail_GGJ",
-      },
-      {
-        name: "Game",
-        link: "https://dasha1362.itch.io/operation-wire",
-      },
+      createLink(
+        "Github",
+        "https://github.com/DevdudeSami/GUEmail_GGJ",
+        "Operation Wire"
+      ),
+      createLink(
+        "Game",
+        "https://dasha1362.itch.io/operation-wire",
+        "Operation Wire"
+      ),
     ],
   },
 ];
