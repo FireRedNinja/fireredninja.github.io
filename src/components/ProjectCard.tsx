@@ -26,6 +26,7 @@ interface ProjectCardProps {
 const iconMappings = {
   github: Github,
   game: Gamepad2,
+  "live site": ExternalLink,
 } as const;
 
 const ProjectCard: React.FC<ProjectCardProps> = ({

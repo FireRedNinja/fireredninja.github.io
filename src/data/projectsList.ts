@@ -1,5 +1,5 @@
 export interface ProjectLink {
-  name: "Github" | "Game";
+  name: "Github" | "Game" | "Live Site";
   link: string;
   ariaLabel: string;
 }
@@ -17,18 +17,77 @@ export interface Project {
  * Helper to create a project link with auto-generated aria label
  */
 function createLink(
-  name: "Github" | "Game",
+  name: "Github" | "Game" | "Live Site",
   link: string,
   projectTitle: string
 ): ProjectLink {
-  const ariaLabel =
-    name === "Github"
-      ? `View source code for ${projectTitle} on GitHub, opens in new tab`
-      : `Play ${projectTitle} game, opens in new tab`;
-  return { name, link, ariaLabel };
+  const ariaLabels: Record<ProjectLink["name"], string> = {
+    Github: `View source code for ${projectTitle} on GitHub, opens in new tab`,
+    Game: `Play ${projectTitle} game, opens in new tab`,
+    "Live Site": `View ${projectTitle} live site, opens in new tab`,
+  };
+  return { name, link, ariaLabel: ariaLabels[name] };
 }
 
 const personalProjects: Project[] = [
+  {
+    title: "Fretflow",
+    description:
+      "A web app to help guitarists learn music theory and improve their fretboard knowledge through interactive exercises and visualizations.",
+    tags: ["personal"],
+    image: "fretflow.webp",
+    imageAlt:
+      "Screenshot of Fretflow web app showing guitar fretboard with notes and interactive exercises",
+    links: [
+      createLink(
+        "Live Site",
+        "https://fireredninja.github.io/fretflow/",
+        "Fretflow"
+      ),
+      createLink(
+        "Github",
+        "https://github.com/FireRedNinja/fretflow",
+        "Fretflow"
+      ),
+    ],
+  },
+  {
+    title: "Art of Runeterra",
+    description:
+      "A web app that showcases the art of the card game Legends of Runeterra",
+    tags: ["personal"],
+    links: [
+      createLink(
+        "Github",
+        "https://github.com/FireRedNinja/art-of-runeterra",
+        "Art of Runeterra"
+      ),
+      createLink(
+        "Live Site",
+        "https://fireredninja.github.io/art-of-runeterra/",
+        "Art of Runeterra"
+      ),
+    ],
+  },
+  {
+    title: "Hex-Guessr",
+    description:
+      "A web app that challenges players to guess the hex color codes of various colors.",
+    tags: ["personal"],
+    image: "hex-guessr.webp",
+    links: [
+      createLink(
+        "Github",
+        "https://github.com/FireRedNinja/hex-guessr",
+        "Hex-Guessr"
+      ),
+      // createLink(
+      //   "Live Site",
+      //   "https://fireredninja.github.io/hex-guessr/",
+      //   "Hex-Guessr"
+      // ),
+    ],
+  },
   {
     title: "Trading Bot",
     description:

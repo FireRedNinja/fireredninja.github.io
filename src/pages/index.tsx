@@ -21,14 +21,11 @@ export const Head: HeadFC = () => (
     <title>
       {profile.name} | {profile.role}
     </title>
-    <meta
-      name="description"
-      content={`${profile.name} - ${profile.role}. ${profile.bio}`}
-    />
+    <meta name="description" content={`${profile.name} - ${profile.role}`} />
     <meta property="og:title" content={`${profile.name} | ${profile.role}`} />
     <meta
       property="og:description"
-      content={`${profile.name} - ${profile.role}. ${profile.bio}`}
+      content={`${profile.name} - ${profile.role}`}
     />
     <meta property="og:type" content="website" />
     <html lang="en" />
