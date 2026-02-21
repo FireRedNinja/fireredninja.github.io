@@ -28,6 +28,9 @@ import {
   SiElasticsearch,
   SiNx,
   SiPercy,
+  SiOpenai,
+  SiClaude,
+  SiGithubcopilot,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 import { IoAccessibility } from "react-icons/io5";
@@ -43,7 +46,8 @@ export interface Skill {
     | "backend"
     | "infrastructure"
     | "testing"
-    | "tools";
+    | "tools"
+    | "ai";
 }
 
 export const skills: Skill[] = [
@@ -218,6 +222,26 @@ export const skills: Skill[] = [
     description: "Accessibility testing for Jest",
     category: "testing",
   },
+  // AI
+  {
+    name: "OpenAI",
+    icon: SiOpenai,
+    description: "GPT models, Codex, and AI API platform",
+    category: "ai",
+  },
+  {
+    name: "Claude",
+    icon: SiClaude,
+    description: "Anthropic's AI assistant for reasoning and coding",
+    category: "ai",
+  },
+  {
+    name: "GitHub Copilot",
+    icon: SiGithubcopilot,
+    description: "AI pair programmer integrated into the editor",
+    category: "ai",
+  },
+
   // Tools
   {
     name: "Git",
@@ -252,6 +276,7 @@ export const skillCategories = [
   { id: "infrastructure", label: "Infrastructure" },
   { id: "testing", label: "Testing" },
   { id: "tools", label: "Tools" },
+  { id: "ai", label: "AI" },
 ] as const;
 
 export default skills;

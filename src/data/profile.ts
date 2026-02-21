@@ -14,13 +14,15 @@ export interface Profile {
   role: string;
   location: string;
   socialLinks: SocialLink[];
+  handle: string;
 }
 
 export const profile: Profile = {
   name: "Noel Rajan",
   firstName: "Noel",
-  role: "Software Engineer",
+  role: "Professional Vibe Coder",
   location: "United Kingdom",
+  handle: "FireRedNinja",
   socialLinks: [
     {
       name: "GitHub",

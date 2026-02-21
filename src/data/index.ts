@@ -12,11 +12,11 @@ export {
 // Navigation items for the top nav
 export const navItems = [
   {
-    label: "Projects",
+    label: "PROJECTS",
     href: "#projects",
     ariaLabel: "Navigate to projects section",
   },
-  { label: "Skills", href: "#skills", ariaLabel: "Navigate to skills section" },
+  { label: "SKILLS", href: "#skills", ariaLabel: "Navigate to skills section" },
 ] as const;
 
 export type NavItem = (typeof navItems)[number];

@@ -1,5 +1,69 @@
 @import "tailwindcss";
 
+/* =============================================
+ * PP Mori — self-hosted sans-serif
+ * ============================================= */
+@font-face {
+  font-family: "PP Mori";
+  src: url("/fonts/PPMori-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Mori";
+  src: url("/fonts/PPMori-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Mori";
+  src: url("/fonts/PPMori-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Mori";
+  src: url("/fonts/PPMori-SemiboldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Mori";
+  src: url("/fonts/PPMori-Extralight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Mori";
+  src: url("/fonts/PPMori-ExtralightItalic.woff2") format("woff2");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* =============================================
+ * Comic Cat — self-hosted display typeface
+ * ============================================= */
+@font-face {
+  font-family: "Comic Cat";
+  src:
+    url("/fonts/ComicCAT.woff2") format("woff2"),
+    url("/fonts/ComicCAT.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Configure dark mode to use class strategy */
 @variant dark (&:where(.dark, .dark *));
 
@@ -9,6 +73,10 @@
    * Earthy Zinc palette with Orange accent
    * All text colors meet 7:1 contrast ratio
    * =========================================== */
+
+  /* Typography */
+  --font-display: "Comic Cat", cursive;
+  --font-sans: "PP Mori", ui-sans-serif, system-ui, sans-serif;
 
   /* Primary accent colors - Orange (Fire theme) */
   --color-accent-orange: #f97316;
@@ -52,6 +120,10 @@
 
   /* ShadCN compatible CSS variables */
   --radius: 0.5rem;
+
+  /* Display typography — editorial tightness */
+  --tracking-display: -0.04em;
+  --leading-display: 0.88;
 }
 
 /* ===========================================
@@ -149,11 +221,14 @@ html {
 body {
   background-color: #fafafa;
   color: #09090b;
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   /* Max line width for readability (WCAG 1.4.8) */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent horizontal overflow from marquee/full-bleed type */
+  overflow-x: hidden;
 }
 
 html.dark body {
@@ -265,8 +340,10 @@ h3,
 h4,
 h5,
 h6 {
-  line-height: 1.3;
+  line-height: var(--leading-display, 0.9);
   font-weight: 700;
+  font-family: var(--font-display, cursive);
+  letter-spacing: var(--tracking-display, -0.04em);
 }
 
 h1 {
@@ -279,6 +356,32 @@ h2 {
 
 h3 {
   font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+/* ===========================================
+ * Editorial text-stroke utilities
+ * =========================================== */
+.text-stroke {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px currentColor;
+  paint-order: stroke fill;
+}
+
+.text-stroke-1 {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px currentColor;
+  paint-order: stroke fill;
+}
+
+.text-stroke-accent {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px var(--color-accent-orange);
+  paint-order: stroke fill;
+}
+
+.dark .text-stroke-accent {
+  -webkit-text-stroke-color: var(--color-accent-orange-dark);
 }
 
 /* ===========================================
@@ -333,3 +436,39 @@ h3 {
   white-space: normal;
 }
 
+/* ===========================================
+ * Animated film-grain overlay
+ * Uses SVG feTurbulence + CSS translate loop
+ * Reduced-motion: animation is disabled via
+ * the global animation-duration: 0.01ms rule
+ * =========================================== */
+@keyframes grain-shift {
+  0%   { transform: translate(0,    0); }
+  10%  { transform: translate(-5%,  -10%); }
+  20%  { transform: translate(-15%,  5%); }
+  30%  { transform: translate( 7%, -25%); }
+  40%  { transform: translate(-5%,  25%); }
+  50%  { transform: translate(-15%, 10%); }
+  60%  { transform: translate( 15%,  0); }
+  70%  { transform: translate( 0,   15%); }
+  80%  { transform: translate( 3%,  35%); }
+  90%  { transform: translate(-10%, 10%); }
+}
+
+.grain-overlay {
+  position: fixed;
+  /* Oversized so translate animation doesn't expose edges */
+  inset: -200%;
+  width: 500%;
+  height: 500%;
+  pointer-events: none;
+  z-index: 100;
+  filter: url(#grain-filter);
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  animation: grain-shift 0.65s steps(1) infinite;
+}
+
+.dark .grain-overlay {
+  opacity: 0.09;
+}

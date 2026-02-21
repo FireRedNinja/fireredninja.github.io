@@ -11,9 +11,11 @@ import { skills, skillCategories } from "../data";
 import {
   useReducedMotion,
   getFadeInUp,
+  getLineReveal,
   getStaggerContainer,
   getStaggerChild,
   getHoverScale,
+  useScrollSkew,
 } from "../lib/motion";
 
 const Skills: React.FC = () => {
@@ -22,27 +24,47 @@ const Skills: React.FC = () => {
   const staggerContainer = getStaggerContainer(reducedMotion, 0.05);
   const staggerChild = getStaggerChild(reducedMotion);
   const hoverScale = getHoverScale(reducedMotion);
+  const skewY = useScrollSkew(2.5);
 
   return (
-    <section
+    <motion.section
       id="skills"
       className="bg-bg-muted-light py-24 px-4 dark:bg-bg-muted-dark"
       aria-labelledby="skills-heading"
+      style={{ skewY }}
     >
       <div className="mx-auto max-w-6xl">
-        <motion.div
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <h2
-            id="skills-heading"
-            className="mb-4 text-3xl font-bold text-text-primary dark:text-text-primary-dark sm:text-4xl"
+        <div className="mb-8">
+          {/* Section index number */}
+          <motion.span
+            className="mb-2 block font-sans text-xs font-medium uppercase tracking-[0.25em] text-accent-orange dark:text-accent-orange-dark"
+            aria-hidden="true"
+            initial={getLineReveal(false, 0).initial}
+            whileInView={getLineReveal(false, 0).animate}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={getLineReveal(false, 0.05).transition}
           >
-            Skills
-          </h2>
-        </motion.div>
+            02
+          </motion.span>
+          {/* Oversized editorial heading */}
+          <div className="overflow-hidden">
+            <motion.h2
+              id="skills-heading"
+              className="font-display font-bold uppercase text-text-primary dark:text-text-primary-dark"
+              style={{
+                fontSize: "clamp(2.5rem, 8vw, 9rem)",
+                lineHeight: 0.9,
+                letterSpacing: "-0.03em",
+              }}
+              initial={getLineReveal(reducedMotion, 0).initial}
+              whileInView={getLineReveal(reducedMotion, 0.1).animate}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={getLineReveal(reducedMotion, 0.1).transition}
+            >
+              Skills
+            </motion.h2>
+          </div>
+        </div>
 
         <TooltipProvider delayDuration={300}>
           <div className="space-y-8">
@@ -104,7 +126,7 @@ const Skills: React.FC = () => {
           </div>
         </TooltipProvider>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

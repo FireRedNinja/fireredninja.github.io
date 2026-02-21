@@ -163,11 +163,11 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <a
             href="#hero"
-            className="text-xl font-bold text-text-primary dark:text-text-primary-dark"
+            className="font-display text-2xl font-bold uppercase tracking-[-0.02em] text-text-primary dark:text-text-primary-dark"
             onClick={(e) => handleNavClick(e, "#hero")}
-            aria-label={`${profile.firstName} - Go to top of page`}
+            aria-label={`${profile.handle} - Go to top of page`}
           >
-            {profile.firstName}
+            {profile.handle}
           </a>
 
           {/* Desktop Navigation */}

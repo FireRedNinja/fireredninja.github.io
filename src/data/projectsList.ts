@@ -33,7 +33,7 @@ const personalProjects: Project[] = [
   {
     title: "Fretflow",
     description:
-      "A web app to help guitarists learn music theory and improve their fretboard knowledge through interactive exercises and visualizations.",
+      "A web app to help guitarists learn music theory and improve their fretboard knowledge through interactive exercises and visualisations.",
     tags: ["personal"],
     image: "fretflow.webp",
     imageAlt:
@@ -88,68 +88,68 @@ const personalProjects: Project[] = [
       // ),
     ],
   },
-  {
-    title: "Trading Bot",
-    description:
-      "A Bot that watches live cryptocurrency prices and calculates when to buy/sell using technical analysis metrics and gives notifications through Discord",
-    tags: ["personal"],
-    image: "tradingBot.webp",
-    imageAlt:
-      "Screenshot of Trading Bot dashboard showing cryptocurrency price charts and trading signals",
-    links: [],
-  },
-  {
-    title: "5 Minute Journal",
-    description:
-      "A Desktop Journal App inspired by the official 5 Minute Journal Book.",
-    tags: ["personal"],
-    image: "5MinuteJournal.webp",
-    imageAlt:
-      "Screenshot of 5 Minute Journal app showing the daily journaling interface",
-    links: [
-      createLink(
-        "Github",
-        "https://github.com/FireRedNinja/5-minute-journal",
-        "5 Minute Journal"
-      ),
-    ],
-  },
-  {
-    title: "Catch Up",
-    description:
-      "An Android App to catch up on daily news feeds such as Hacker News, Product Hunt and GitHub Trending Repositories",
-    tags: ["personal"],
-    links: [
-      createLink(
-        "Github",
-        "https://github.com/FireRedNinja/catch_up",
-        "Catch Up"
-      ),
-    ],
-  },
-  {
-    title: "Greetings",
-    description:
-      "A Firefox New Tab Dashboard that shows favourite links and uses the Mapbox API to generate a topographic map for a Munro (Scottish Mountain)",
-    tags: ["personal"],
-    image: "greetings.jpg",
-    imageAlt:
-      "Screenshot of Greetings Firefox extension showing a topographic map dashboard",
-    links: [
-      createLink(
-        "Github",
-        "https://github.com/FireRedNinja/dashboard-extension",
-        "Greetings"
-      ),
-    ],
-  },
-  {
-    title: "StarCraft 2 Bot",
-    description:
-      "A Bot that plays StarCraft 2 by following a simple build order",
-    tags: ["personal"],
-    links: [],
-  },
+  // {
+  //   title: "Trading Bot",
+  //   description:
+  //     "A Bot that watches live cryptocurrency prices and calculates when to buy/sell using technical analysis metrics and gives notifications through Discord",
+  //   tags: ["personal"],
+  //   image: "tradingBot.webp",
+  //   imageAlt:
+  //     "Screenshot of Trading Bot dashboard showing cryptocurrency price charts and trading signals",
+  //   links: [],
+  // },
+  // {
+  //   title: "5 Minute Journal",
+  //   description:
+  //     "A Desktop Journal App inspired by the official 5 Minute Journal Book.",
+  //   tags: ["personal"],
+  //   image: "5MinuteJournal.webp",
+  //   imageAlt:
+  //     "Screenshot of 5 Minute Journal app showing the daily journaling interface",
+  //   links: [
+  //     createLink(
+  //       "Github",
+  //       "https://github.com/FireRedNinja/5-minute-journal",
+  //       "5 Minute Journal"
+  //     ),
+  //   ],
+  // },
+  // {
+  //   title: "Catch Up",
+  //   description:
+  //     "An Android App to catch up on daily news feeds such as Hacker News, Product Hunt and GitHub Trending Repositories",
+  //   tags: ["personal"],
+  //   links: [
+  //     createLink(
+  //       "Github",
+  //       "https://github.com/FireRedNinja/catch_up",
+  //       "Catch Up"
+  //     ),
+  //   ],
+  // },
+  // {
+  //   title: "Greetings",
+  //   description:
+  //     "A Firefox New Tab Dashboard that shows favourite links and uses the Mapbox API to generate a topographic map for a Munro (Scottish Mountain)",
+  //   tags: ["personal"],
+  //   image: "greetings.jpg",
+  //   imageAlt:
+  //     "Screenshot of Greetings Firefox extension showing a topographic map dashboard",
+  //   links: [
+  //     createLink(
+  //       "Github",
+  //       "https://github.com/FireRedNinja/dashboard-extension",
+  //       "Greetings"
+  //     ),
+  //   ],
+  // },
+  // {
+  //   title: "StarCraft 2 Bot",
+  //   description:
+  //     "A Bot that plays StarCraft 2 by following a simple build order",
+  //   tags: ["personal"],
+  //   links: [],
+  // },
 ];
 
 const hackathonProjects: Project[] = [

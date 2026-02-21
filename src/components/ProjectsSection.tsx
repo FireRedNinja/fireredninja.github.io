@@ -8,8 +8,10 @@ import ProjectCard from "./ProjectCard";
 import {
   useReducedMotion,
   getFadeInUp,
+  getLineReveal,
   getStaggerContainer,
   getStaggerChild,
+  useScrollSkew,
 } from "../lib/motion";
 
 interface ImageNode {
@@ -27,6 +29,7 @@ const Projects: React.FC = () => {
   const fadeInUp = getFadeInUp(reducedMotion);
   const staggerContainer = getStaggerContainer(reducedMotion, 0.1);
   const staggerChild = getStaggerChild(reducedMotion);
+  const skewY = useScrollSkew(2.5);
 
   const data = useStaticQuery(graphql`
     query {
@@ -69,25 +72,44 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <section
+    <motion.section
       id="projects"
       className="py-24 px-4"
       aria-labelledby="projects-heading"
+      style={{ skewY }}
     >
       <div className="mx-auto max-w-6xl">
-        <motion.div
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <h2
-            id="projects-heading"
-            className="mb-8 text-3xl font-bold text-text-primary dark:text-text-primary-dark sm:text-4xl"
+        <div className="mb-8">
+          {/* Section index number */}
+          <motion.span
+            className="mb-2 block font-sans text-xs font-medium uppercase tracking-[0.25em] text-accent-orange dark:text-accent-orange-dark"
+            aria-hidden="true"
+            initial={getLineReveal(false, 0).initial}
+            whileInView={getLineReveal(false, 0).animate}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={getLineReveal(false, 0.05).transition}
           >
-            Projects
-          </h2>
-        </motion.div>
+            01
+          </motion.span>
+          {/* Oversized editorial heading */}
+          <div className="overflow-hidden">
+            <motion.h2
+              id="projects-heading"
+              className="font-display font-bold uppercase text-text-primary dark:text-text-primary-dark"
+              style={{
+                fontSize: "clamp(2.5rem, 8vw, 9rem)",
+                lineHeight: 0.9,
+                letterSpacing: "-0.03em",
+              }}
+              initial={getLineReveal(reducedMotion, 0).initial}
+              whileInView={getLineReveal(reducedMotion, 0.1).animate}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={getLineReveal(reducedMotion, 0.1).transition}
+            >
+              Projects
+            </motion.h2>
+          </div>
+        </div>
 
         <Tabs defaultValue="personal" className="w-full">
           <motion.div
@@ -154,7 +176,7 @@ const Projects: React.FC = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
