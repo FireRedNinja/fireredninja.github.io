@@ -52,22 +52,32 @@ const Navbar: React.FC = () => {
   useGSAP(
     () => {
       if (!isMounted) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      gsap.set(".nav-logo", { opacity: 0, x: -20 });
-      gsap.set(".nav-link", { opacity: 0, y: -10 });
-      gsap.set(".nav-theme-toggle", { opacity: 0, scale: 0.8 });
+      const container = navRef.current;
+      if (!container) return;
 
+      // Remove CSS hidden-state classes — GSAP takes over via inline styles.
+      const hiddenEls = container.querySelectorAll(".gsap-hidden-fade");
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        hiddenEls.forEach((el) => el.classList.remove("gsap-hidden-fade"));
+        return;
+      }
+
+      hiddenEls.forEach((el) => el.classList.remove("gsap-hidden-fade"));
+
+      // Use fromTo() to supply both start and end values, avoiding
+      // forced reflows from GSAP reading getComputedStyle.
       const tl = gsap.timeline({ delay: 1.5 });
 
-      tl.to(".nav-logo", {
-        opacity: 1,
-        x: 0,
-        duration: 0.6,
-        ease: "power3.out",
-      })
-        .to(
+      tl.fromTo(
+        ".nav-logo",
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }
+      )
+        .fromTo(
           ".nav-link",
+          { opacity: 0, y: -10 },
           {
             opacity: 1,
             y: 0,
@@ -77,8 +87,9 @@ const Navbar: React.FC = () => {
           },
           "-=0.3"
         )
-        .to(
+        .fromTo(
           ".nav-theme-toggle",
+          { opacity: 0, scale: 0.8 },
           {
             opacity: 1,
             scale: 1,
@@ -191,7 +202,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <a
             href="#hero"
-            className="nav-logo font-display text-2xl font-bold uppercase tracking-[-0.02em] text-text-primary dark:text-text-primary-dark"
+            className="nav-logo gsap-hidden-fade font-display text-2xl font-bold uppercase tracking-[-0.02em] text-text-primary dark:text-text-primary-dark"
             onClick={(e) => handleNavClick(e, "#hero")}
             aria-label={`${profile.handle} - Go to top of page`}
           >
@@ -201,7 +212,10 @@ const Navbar: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => (
-              <div key={item.href} className="nav-link group relative">
+              <div
+                key={item.href}
+                className="nav-link gsap-hidden-fade group relative"
+              >
                 <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
@@ -240,7 +254,7 @@ const Navbar: React.FC = () => {
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 aria-pressed={theme === "dark"}
-                className="nav-theme-toggle ml-2 hover:scale-105 active:scale-95 transition-transform"
+                className="nav-theme-toggle gsap-hidden-fade ml-2 hover:scale-105 active:scale-95 transition-transform"
               >
                 {theme === "dark" ? (
                   <Moon className="h-5 w-5" aria-hidden="true" />

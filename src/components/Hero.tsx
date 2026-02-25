@@ -21,41 +21,65 @@ const Hero: React.FC = () => {
   // ── Hero entrance timeline ──────────────────────────────────────
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const container = containerRef.current;
+      if (!container) return;
 
-      // Hidden states (content stays visible without JS thanks to CSS defaults)
-      gsap.set(".hero-char", { yPercent: 110 });
-      gsap.set(".hero-char-1", { rotation: 3 });
-      gsap.set(".hero-role", { yPercent: 100, opacity: 0 });
-      gsap.set(".hero-cta", { opacity: 0, y: 30 });
+      // Remove CSS hidden-state classes — done synchronously before any paint,
+      // so there is no visible flash. GSAP takes over via inline styles.
+      const hiddenEls = container.querySelectorAll(
+        ".gsap-hidden-y, .gsap-hidden-fade, .gsap-hidden-char-1"
+      );
 
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        hiddenEls.forEach((el) =>
+          el.classList.remove(
+            "gsap-hidden-y",
+            "gsap-hidden-fade",
+            "gsap-hidden-char-1"
+          )
+        );
+        return;
+      }
+
+      hiddenEls.forEach((el) =>
+        el.classList.remove(
+          "gsap-hidden-y",
+          "gsap-hidden-fade",
+          "gsap-hidden-char-1"
+        )
+      );
+
+      // Use fromTo() to provide both start and end values, avoiding
+      // forced reflows from GSAP reading getComputedStyle.
       const tl = gsap.timeline({
         defaults: { ease: "power4.out" },
         delay: 0.3,
       });
 
       // Role label slides up
-      tl.to(".hero-role", {
-        yPercent: 0,
-        opacity: 1,
-        duration: 0.6,
-        ease: "power3.out",
-      })
+      tl.fromTo(
+        ".hero-role",
+        { yPercent: 100, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 0.6, ease: "power3.out" }
+      )
         // First name chars stagger in
-        .to(
+        .fromTo(
           ".hero-char-0",
+          { yPercent: 110 },
           { yPercent: 0, duration: 0.7, stagger: 0.04 },
           "-=0.3"
         )
         // Second name (stroke) chars with subtle rotation
-        .to(
+        .fromTo(
           ".hero-char-1",
+          { yPercent: 110, rotation: 3 },
           { yPercent: 0, rotation: 0, duration: 0.7, stagger: 0.04 },
           "-=0.4"
         )
         // CTA button with overshoot
-        .to(
+        .fromTo(
           ".hero-cta",
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
@@ -79,7 +103,7 @@ const Hero: React.FC = () => {
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-8 lg:px-12">
         {/* Role label — appears above name as a typographic anchor */}
         <div className="mb-4 overflow-hidden">
-          <p className="hero-role font-sans text-xs font-medium uppercase tracking-[0.25em] text-text-secondary dark:text-text-secondary-dark sm:text-sm">
+          <p className="hero-role gsap-hidden-y font-sans text-xs font-medium uppercase tracking-[0.25em] text-text-secondary dark:text-text-secondary-dark sm:text-sm">
             {roleText}
           </p>
         </div>
@@ -110,7 +134,7 @@ const Hero: React.FC = () => {
                       style={{ display: "inline-block", overflow: "hidden" }}
                     >
                       <span
-                        className={`hero-char hero-char-${wi} ${wordClass}`}
+                        className={`hero-char hero-char-${wi} gsap-hidden-y ${wi === 1 ? "gsap-hidden-char-1" : ""} ${wordClass}`}
                         style={{ display: "inline-block" }}
                         aria-hidden="true"
                       >
@@ -127,7 +151,7 @@ const Hero: React.FC = () => {
         </h1>
 
         {/* CTA Button */}
-        <div className="hero-cta flex justify-center">
+        <div className="hero-cta gsap-hidden-fade flex justify-center">
           <MagneticButton>
             <Button
               size="lg"

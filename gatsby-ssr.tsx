@@ -29,6 +29,33 @@ const ThemeScript = (): React.ReactElement => {
 
 export const onRenderBody: GatsbySSR["onRenderBody"] = ({
   setPreBodyComponents,
+  setHeadComponents,
 }) => {
   setPreBodyComponents([<ThemeScript key="theme-script" />]);
+  setHeadComponents([
+    <link
+      key="font-mori-semibold"
+      rel="preload"
+      href="/fonts/PPMori-Semibold.woff2"
+      as="font"
+      type="font/woff2"
+      crossOrigin="anonymous"
+    />,
+    <link
+      key="font-comic-cat"
+      rel="preload"
+      href="/fonts/ComicCAT.woff2"
+      as="font"
+      type="font/woff2"
+      crossOrigin="anonymous"
+    />,
+    <link
+      key="font-mori-regular"
+      rel="preload"
+      href="/fonts/PPMori-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossOrigin="anonymous"
+    />,
+  ]);
 };

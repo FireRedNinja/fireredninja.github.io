@@ -9,6 +9,10 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  size-adjust: 100%;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
@@ -25,6 +29,10 @@
   font-weight: 600;
   font-style: normal;
   font-display: swap;
+  size-adjust: 100%;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
@@ -62,6 +70,10 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  size-adjust: 105%;
+  ascent-override: 90%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 /* Configure dark mode to use class strategy */
@@ -442,33 +454,21 @@ h3 {
  * Reduced-motion: animation is disabled via
  * the global animation-duration: 0.01ms rule
  * =========================================== */
-@keyframes grain-shift {
-  0%   { transform: translate(0,    0); }
-  10%  { transform: translate(-5%,  -10%); }
-  20%  { transform: translate(-15%,  5%); }
-  30%  { transform: translate( 7%, -25%); }
-  40%  { transform: translate(-5%,  25%); }
-  50%  { transform: translate(-15%, 10%); }
-  60%  { transform: translate( 15%,  0); }
-  70%  { transform: translate( 0,   15%); }
-  80%  { transform: translate( 3%,  35%); }
-  90%  { transform: translate(-10%, 10%); }
+/* ===========================================
+ * GSAP initial-state classes
+ * Set hidden states via CSS to avoid forced reflows
+ * from gsap.set() reading computed properties.
+ * GSAP tweens FROM these states; classes are left
+ * in place (GSAP overrides via inline styles).
+ * =========================================== */
+.gsap-hidden-y {
+  translate: 0 110%;
 }
 
-.grain-overlay {
-  position: fixed;
-  /* Oversized so translate animation doesn't expose edges */
-  inset: -200%;
-  width: 500%;
-  height: 500%;
-  pointer-events: none;
-  z-index: 100;
-  filter: url(#grain-filter);
-  opacity: 0.055;
-  mix-blend-mode: overlay;
-  animation: grain-shift 0.65s steps(1) infinite;
+.gsap-hidden-char-1 {
+  rotate: 3deg;
 }
 
-.dark .grain-overlay {
-  opacity: 0.09;
+.gsap-hidden-fade {
+  opacity: 0;
 }
