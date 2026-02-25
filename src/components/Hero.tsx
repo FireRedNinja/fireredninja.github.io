@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { profile } from "../data";
+import { gsap, useGSAP } from "../lib/gsap";
+import MagneticButton from "./MagneticButton";
 
 const Hero: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const handleScrollToProjects = () => {
     const element = document.getElementById("projects");
     if (element) {
@@ -14,16 +18,68 @@ const Hero: React.FC = () => {
   const nameWords = profile.name.split(" ");
   const roleText = profile.role;
 
+  // ── Hero entrance timeline ──────────────────────────────────────
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      // Hidden states (content stays visible without JS thanks to CSS defaults)
+      gsap.set(".hero-char", { yPercent: 110 });
+      gsap.set(".hero-char-1", { rotation: 3 });
+      gsap.set(".hero-role", { yPercent: 100, opacity: 0 });
+      gsap.set(".hero-cta", { opacity: 0, y: 30 });
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power4.out" },
+        delay: 0.3,
+      });
+
+      // Role label slides up
+      tl.to(".hero-role", {
+        yPercent: 0,
+        opacity: 1,
+        duration: 0.6,
+        ease: "power3.out",
+      })
+        // First name chars stagger in
+        .to(
+          ".hero-char-0",
+          { yPercent: 0, duration: 0.7, stagger: 0.04 },
+          "-=0.3"
+        )
+        // Second name (stroke) chars with subtle rotation
+        .to(
+          ".hero-char-1",
+          { yPercent: 0, rotation: 0, duration: 0.7, stagger: 0.04 },
+          "-=0.4"
+        )
+        // CTA button with overshoot
+        .to(
+          ".hero-cta",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "back.out(1.7)",
+            clearProps: "all",
+          },
+          "-=0.3"
+        );
+    },
+    { scope: containerRef }
+  );
+
   return (
     <section
       id="hero"
+      ref={containerRef}
       className="relative flex h-screen flex-col justify-center overflow-hidden pt-24"
       aria-labelledby="hero-heading"
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-8 lg:px-12">
         {/* Role label — appears above name as a typographic anchor */}
         <div className="mb-4 overflow-hidden">
-          <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-text-secondary dark:text-text-secondary-dark sm:text-sm">
+          <p className="hero-role font-sans text-xs font-medium uppercase tracking-[0.25em] text-text-secondary dark:text-text-secondary-dark sm:text-sm">
             {roleText}
           </p>
         </div>
@@ -54,7 +110,7 @@ const Hero: React.FC = () => {
                       style={{ display: "inline-block", overflow: "hidden" }}
                     >
                       <span
-                        className={wordClass}
+                        className={`hero-char hero-char-${wi} ${wordClass}`}
                         style={{ display: "inline-block" }}
                         aria-hidden="true"
                       >
@@ -71,21 +127,23 @@ const Hero: React.FC = () => {
         </h1>
 
         {/* CTA Button */}
-        <div className="flex justify-center">
-          <Button
-            size="lg"
-            onClick={handleScrollToProjects}
-            className="group gap-2"
-            aria-label="View my projects - scroll to projects section"
-          >
-            View My Work
-            <span>
-              <ArrowDown
-                className="h-5 w-5 transition-transform group-hover:translate-y-1"
-                aria-hidden="true"
-              />
-            </span>
-          </Button>
+        <div className="hero-cta flex justify-center">
+          <MagneticButton>
+            <Button
+              size="lg"
+              onClick={handleScrollToProjects}
+              className="group gap-2"
+              aria-label="View my projects - scroll to projects section"
+            >
+              View My Work
+              <span>
+                <ArrowDown
+                  className="h-5 w-5 transition-transform group-hover:translate-y-1"
+                  aria-hidden="true"
+                />
+              </span>
+            </Button>
+          </MagneticButton>
         </div>
       </div>
     </section>

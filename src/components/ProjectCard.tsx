@@ -12,6 +12,7 @@ import {
 import { Button } from "./ui/button";
 import Modal from "./Modal";
 import type { ProjectLink } from "../data/projectsList";
+import { gsap, ScrollTrigger, useGSAP } from "../lib/gsap";
 
 interface ProjectCardProps {
   title: string;
@@ -36,6 +37,49 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const xTo = useRef<gsap.QuickToFunc | null>(null);
+  const yTo = useRef<gsap.QuickToFunc | null>(null);
+
+  // ── 3D tilt on hover (desktop only) ─────────────────────
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (ScrollTrigger.isTouch) return;
+
+      const card = cardRef.current;
+      if (!card) return;
+
+      gsap.set(card, {
+        transformPerspective: 800,
+        transformStyle: "preserve-3d",
+      });
+      xTo.current = gsap.quickTo(card, "rotationY", {
+        duration: 0.4,
+        ease: "power3.out",
+      });
+      yTo.current = gsap.quickTo(card, "rotationX", {
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    },
+    { scope: cardRef }
+  );
+
+  const handleMouseMove = (e: React.MouseEvent): void => {
+    if (!cardRef.current || !xTo.current || !yTo.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const deltaX = (e.clientX - rect.left - centerX) / centerX;
+    const deltaY = (e.clientY - rect.top - centerY) / centerY;
+    xTo.current(deltaX * 8);
+    yTo.current(deltaY * -8);
+  };
+
+  const handleMouseLeave = (): void => {
+    xTo.current?.(0);
+    yTo.current?.(0);
+  };
 
   const handleOpenModal = (): void => setShowModal(true);
   const handleCloseModal = (): void => setShowModal(false);
@@ -44,7 +88,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     <>
       <div
         ref={cardRef}
-        className="h-full transition-transform duration-200 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.2)]"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="h-full transition-shadow duration-200 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.2)]"
       >
         <Card className="group flex h-full flex-col overflow-hidden">
           {/* Image */}

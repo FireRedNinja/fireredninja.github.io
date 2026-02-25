@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 import {
@@ -10,10 +10,12 @@ import {
 } from "./ui/sheet";
 import { navItems, profile } from "../data";
 import { cn } from "../lib/utils";
+import { gsap, useGSAP } from "../lib/gsap";
 
 type Theme = "light" | "dark";
 
 const Navbar: React.FC = () => {
+  const navRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<string>("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [theme, setTheme] = useState<Theme>("light");
@@ -45,6 +47,50 @@ const Navbar: React.FC = () => {
       localStorage.setItem("theme", "light");
     }
   }, [theme]);
+
+  // ── Navbar entrance (delayed to play after hero) ──────────────
+  useGSAP(
+    () => {
+      if (!isMounted) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      gsap.set(".nav-logo", { opacity: 0, x: -20 });
+      gsap.set(".nav-link", { opacity: 0, y: -10 });
+      gsap.set(".nav-theme-toggle", { opacity: 0, scale: 0.8 });
+
+      const tl = gsap.timeline({ delay: 1.5 });
+
+      tl.to(".nav-logo", {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        ease: "power3.out",
+      })
+        .to(
+          ".nav-link",
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.08,
+            duration: 0.5,
+            ease: "power3.out",
+          },
+          "-=0.3"
+        )
+        .to(
+          ".nav-theme-toggle",
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            ease: "back.out(1.7)",
+            clearProps: "all",
+          },
+          "-=0.2"
+        );
+    },
+    { scope: navRef, dependencies: [isMounted] }
+  );
 
   // Scroll spy using Intersection Observer
   useEffect(() => {
@@ -128,6 +174,7 @@ const Navbar: React.FC = () => {
 
       {/* Navbar */}
       <header
+        ref={navRef}
         className={cn(
           "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
           isScrolled
@@ -144,7 +191,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <a
             href="#hero"
-            className="font-display text-2xl font-bold uppercase tracking-[-0.02em] text-text-primary dark:text-text-primary-dark"
+            className="nav-logo font-display text-2xl font-bold uppercase tracking-[-0.02em] text-text-primary dark:text-text-primary-dark"
             onClick={(e) => handleNavClick(e, "#hero")}
             aria-label={`${profile.handle} - Go to top of page`}
           >
@@ -154,7 +201,7 @@ const Navbar: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => (
-              <div key={item.href} className="group relative">
+              <div key={item.href} className="nav-link group relative">
                 <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
@@ -193,7 +240,7 @@ const Navbar: React.FC = () => {
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 aria-pressed={theme === "dark"}
-                className="ml-2 hover:scale-105 active:scale-95 transition-transform"
+                className="nav-theme-toggle ml-2 hover:scale-105 active:scale-95 transition-transform"
               >
                 {theme === "dark" ? (
                   <Moon className="h-5 w-5" aria-hidden="true" />
