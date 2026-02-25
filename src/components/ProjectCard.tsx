@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import React, { useRef, useState } from "react";
 import { Github, Gamepad2, ExternalLink } from "lucide-react";
 import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import {
@@ -13,7 +12,6 @@ import {
 import { Button } from "./ui/button";
 import Modal from "./Modal";
 import type { ProjectLink } from "../data/projectsList";
-import { useReducedMotion } from "../lib/motion";
 
 interface ProjectCardProps {
   title: string;
@@ -37,67 +35,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   imageAlt,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
-  const reducedMotion = useReducedMotion();
   const cardRef = useRef<HTMLDivElement>(null);
-
-  // Detect touch devices after mount (SSR safe)
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(hover: none)").matches);
-  }, []);
-
-  // 3D tilt motion values
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 25 });
-  const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 25 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (reducedMotion || isTouch || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const maxDeg = 8;
-    rotateY.set(((e.clientX - cx) / (rect.width / 2)) * maxDeg);
-    rotateX.set(-((e.clientY - cy) / (rect.height / 2)) * maxDeg);
-  };
-
-  const handleMouseLeave = () => {
-    rotateX.set(0);
-    rotateY.set(0);
-    setIsHovered(false);
-  };
 
   const handleOpenModal = (): void => setShowModal(true);
   const handleCloseModal = (): void => setShowModal(false);
 
   return (
     <>
-      <motion.div
+      <div
         ref={cardRef}
-        className="h-full"
-        style={{
-          perspective: 1000,
-          rotateX: reducedMotion || isTouch ? 0 : springRotateX,
-          rotateY: reducedMotion || isTouch ? 0 : springRotateY,
-          transformStyle: "preserve-3d",
-        }}
-        whileHover={
-          reducedMotion
-            ? {}
-            : {
-                y: -6,
-                boxShadow: "0 20px 40px -12px rgba(0,0,0,0.2)",
-                transition: { type: "spring", stiffness: 400, damping: 25 },
-              }
-        }
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
+        className="h-full transition-transform duration-200 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.2)]"
       >
-        <Card className="flex h-full flex-col overflow-hidden">
+        <Card className="group flex h-full flex-col overflow-hidden">
           {/* Image */}
           {image && (
             <button
@@ -112,19 +61,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               />
 
               {/* Caption sweep overlay */}
-              <motion.div
-                className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent px-4 pb-4 pt-12"
-                initial={{ y: "100%" }}
-                animate={{
-                  y: isHovered && !isTouch && !reducedMotion ? 0 : "100%",
-                }}
-                transition={{ type: "spring", stiffness: 300, damping: 28 }}
+              <div
+                className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/80 via-black/50 to-transparent px-4 pb-4 pt-12 transition-transform duration-300 group-hover:translate-y-0"
                 aria-hidden="true"
               >
                 <p className="line-clamp-2 text-left text-sm text-white/90">
                   {description}
                 </p>
-              </motion.div>
+              </div>
 
               {/* Zoom icon hint */}
               <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/10">
@@ -176,7 +120,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             </CardFooter>
           )}
         </Card>
-      </motion.div>
+      </div>
 
       {/* Modal */}
       {image && showModal && (

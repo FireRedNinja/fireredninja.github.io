@@ -1,18 +1,9 @@
 import React from "react";
-import { motion } from "motion/react";
 import { graphql, useStaticQuery } from "gatsby";
 import { IGatsbyImageData } from "gatsby-plugin-image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { projectsList } from "../data";
 import ProjectCard from "./ProjectCard";
-import {
-  useReducedMotion,
-  getFadeInUp,
-  getLineReveal,
-  getStaggerContainer,
-  getStaggerChild,
-  useScrollSkew,
-} from "../lib/motion";
 
 interface ImageNode {
   node: {
@@ -25,12 +16,6 @@ interface ImageNode {
 }
 
 const Projects: React.FC = () => {
-  const reducedMotion = useReducedMotion();
-  const fadeInUp = getFadeInUp(reducedMotion);
-  const staggerContainer = getStaggerContainer(reducedMotion, 0.1);
-  const staggerChild = getStaggerChild(reducedMotion);
-  const skewY = useScrollSkew(2.5);
-
   const data = useStaticQuery(graphql`
     query {
       image: allImageSharp {
@@ -72,28 +57,23 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <motion.section
+    <section
       id="projects"
       className="py-24 px-4"
       aria-labelledby="projects-heading"
-      style={{ skewY }}
     >
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
           {/* Section index number */}
-          <motion.span
+          <span
             className="mb-2 block font-sans text-xs font-medium uppercase tracking-[0.25em] text-accent-orange dark:text-accent-orange-dark"
             aria-hidden="true"
-            initial={getLineReveal(false, 0).initial}
-            whileInView={getLineReveal(false, 0).animate}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={getLineReveal(false, 0.05).transition}
           >
             01
-          </motion.span>
+          </span>
           {/* Oversized editorial heading */}
           <div className="overflow-hidden">
-            <motion.h2
+            <h2
               id="projects-heading"
               className="font-display font-bold uppercase text-text-primary dark:text-text-primary-dark"
               style={{
@@ -101,23 +81,14 @@ const Projects: React.FC = () => {
                 lineHeight: 0.9,
                 letterSpacing: "-0.03em",
               }}
-              initial={getLineReveal(reducedMotion, 0).initial}
-              whileInView={getLineReveal(reducedMotion, 0.1).animate}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={getLineReveal(reducedMotion, 0.1).transition}
             >
               Projects
-            </motion.h2>
+            </h2>
           </div>
         </div>
 
         <Tabs defaultValue="personal" className="w-full">
-          <motion.div
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
+          <div>
             <TabsList className="mb-8" aria-label="Project categories">
               <TabsTrigger value="personal" aria-label="View personal projects">
                 Personal
@@ -129,18 +100,12 @@ const Projects: React.FC = () => {
                 Hackathon
               </TabsTrigger>
             </TabsList>
-          </motion.div>
+          </div>
 
           <TabsContent value="personal">
-            <motion.div
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-            >
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {personalProjects.map((project) => (
-                <motion.div key={project.title} variants={staggerChild}>
+                <div key={project.title}>
                   <ProjectCard
                     title={project.title}
                     description={project.description}
@@ -148,21 +113,15 @@ const Projects: React.FC = () => {
                     image={getProjectImage(project.image)}
                     imageAlt={project.imageAlt}
                   />
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </TabsContent>
 
           <TabsContent value="hackathon">
-            <motion.div
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-            >
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {hackathonProjects.map((project) => (
-                <motion.div key={project.title} variants={staggerChild}>
+                <div key={project.title}>
                   <ProjectCard
                     title={project.title}
                     description={project.description}
@@ -170,13 +129,13 @@ const Projects: React.FC = () => {
                     image={getProjectImage(project.image)}
                     imageAlt={project.imageAlt}
                   />
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "motion/react";
 import { Badge } from "./ui/badge";
 import {
   Tooltip,
@@ -8,47 +7,26 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { skills, skillCategories } from "../data";
-import {
-  useReducedMotion,
-  getFadeInUp,
-  getLineReveal,
-  getStaggerContainer,
-  getStaggerChild,
-  getHoverScale,
-  useScrollSkew,
-} from "../lib/motion";
 
 const Skills: React.FC = () => {
-  const reducedMotion = useReducedMotion();
-  const fadeInUp = getFadeInUp(reducedMotion);
-  const staggerContainer = getStaggerContainer(reducedMotion, 0.05);
-  const staggerChild = getStaggerChild(reducedMotion);
-  const hoverScale = getHoverScale(reducedMotion);
-  const skewY = useScrollSkew(2.5);
-
   return (
-    <motion.section
+    <section
       id="skills"
       className="bg-bg-muted-light py-24 px-4 dark:bg-bg-muted-dark"
       aria-labelledby="skills-heading"
-      style={{ skewY }}
     >
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
           {/* Section index number */}
-          <motion.span
+          <span
             className="mb-2 block font-sans text-xs font-medium uppercase tracking-[0.25em] text-accent-orange dark:text-accent-orange-dark"
             aria-hidden="true"
-            initial={getLineReveal(false, 0).initial}
-            whileInView={getLineReveal(false, 0).animate}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={getLineReveal(false, 0.05).transition}
           >
             02
-          </motion.span>
+          </span>
           {/* Oversized editorial heading */}
           <div className="overflow-hidden">
-            <motion.h2
+            <h2
               id="skills-heading"
               className="font-display font-bold uppercase text-text-primary dark:text-text-primary-dark"
               style={{
@@ -56,13 +34,9 @@ const Skills: React.FC = () => {
                 lineHeight: 0.9,
                 letterSpacing: "-0.03em",
               }}
-              initial={getLineReveal(reducedMotion, 0).initial}
-              whileInView={getLineReveal(reducedMotion, 0.1).animate}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={getLineReveal(reducedMotion, 0.1).transition}
             >
               Skills
-            </motion.h2>
+            </h2>
           </div>
         </div>
 
@@ -74,32 +48,22 @@ const Skills: React.FC = () => {
               );
 
               return (
-                <motion.div
-                  key={category.id}
-                  variants={fadeInUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-50px" }}
-                >
+                <div key={category.id}>
                   <h3 className="mb-4 text-xl font-semibold text-text-primary dark:text-text-primary-dark">
                     {category.label}
                   </h3>
-                  <motion.ul
+                  <ul
                     className="flex flex-wrap gap-3"
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-50px" }}
                     role="list"
                     aria-label={`${category.label} skills`}
                   >
                     {categorySkills.map((skill) => {
                       const Icon = skill.icon;
                       return (
-                        <motion.li key={skill.name} variants={staggerChild}>
+                        <li key={skill.name}>
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <motion.div {...hoverScale}>
+                              <div className="hover:scale-[1.02] active:scale-[0.98] transition-transform">
                                 <Badge
                                   variant="secondary"
                                   className="cursor-default gap-2 px-4 py-2 text-base"
@@ -110,23 +74,23 @@ const Skills: React.FC = () => {
                                   />
                                   <span>{skill.name}</span>
                                 </Badge>
-                              </motion.div>
+                              </div>
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>{skill.description}</p>
                             </TooltipContent>
                           </Tooltip>
-                        </motion.li>
+                        </li>
                       );
                     })}
-                  </motion.ul>
-                </motion.div>
+                  </ul>
+                </div>
               );
             })}
           </div>
         </TooltipProvider>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

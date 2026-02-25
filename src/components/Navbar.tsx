@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { motion } from "motion/react";
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 import {
@@ -11,12 +10,6 @@ import {
 } from "./ui/sheet";
 import { navItems, profile } from "../data";
 import { cn } from "../lib/utils";
-import {
-  useReducedMotion,
-  getNavLinkVariants,
-  getStaggerContainer,
-  getStaggerChild,
-} from "../lib/motion";
 
 type Theme = "light" | "dark";
 
@@ -26,7 +19,6 @@ const Navbar: React.FC = () => {
   const [theme, setTheme] = useState<Theme>("light");
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const reducedMotion = useReducedMotion();
 
   // Handle SSR - only show interactive elements after mount
   useEffect(() => {
@@ -109,16 +101,12 @@ const Navbar: React.FC = () => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
+      element.scrollIntoView({ behavior: "smooth" });
       // Update URL without adding to history
       window.history.replaceState(null, "", href);
     }
     setIsOpen(false);
   };
-
-  const navLinkVariants = getNavLinkVariants(reducedMotion);
-  const staggerContainer = getStaggerContainer(reducedMotion, 0.1);
-  const staggerChild = getStaggerChild(reducedMotion);
 
   return (
     <>
@@ -131,9 +119,7 @@ const Navbar: React.FC = () => {
           const main = document.getElementById("main-content");
           if (main) {
             main.focus();
-            main.scrollIntoView({
-              behavior: reducedMotion ? "auto" : "smooth",
-            });
+            main.scrollIntoView({ behavior: "smooth" });
           }
         }}
       >
@@ -141,12 +127,7 @@ const Navbar: React.FC = () => {
       </a>
 
       {/* Navbar */}
-      <motion.header
-        initial={reducedMotion ? {} : { y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={
-          reducedMotion ? { duration: 0 } : { duration: 0.5, ease: "easeOut" }
-        }
+      <header
         className={cn(
           "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
           isScrolled
@@ -173,12 +154,7 @@ const Navbar: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => (
-              <motion.div
-                key={item.href}
-                className="relative"
-                initial="initial"
-                whileHover="hover"
-              >
+              <div key={item.href} className="group relative">
                 <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
@@ -196,59 +172,35 @@ const Navbar: React.FC = () => {
                   }
                 >
                   {item.label}
-                  {/* Animated underline */}
-                  <motion.span
-                    variants={navLinkVariants}
+                  {/* Underline */}
+                  <span
                     className={cn(
-                      "absolute bottom-0 left-4 right-4 h-0.5 bg-accent-orange dark:bg-accent-orange-dark",
+                      "absolute bottom-0 left-4 right-4 h-0.5 origin-left bg-accent-orange transition-transform duration-200 dark:bg-accent-orange-dark",
                       activeSection === item.href.replace("#", "")
                         ? "scale-x-100"
-                        : ""
+                        : "scale-x-0 group-hover:scale-x-100"
                     )}
-                    initial={
-                      activeSection === item.href.replace("#", "")
-                        ? "active"
-                        : "initial"
-                    }
-                    style={{ originX: 0 }}
                   />
                 </a>
-              </motion.div>
+              </div>
             ))}
 
             {/* Theme Toggle - Desktop */}
             {isMounted && (
-              <motion.div
-                whileHover={reducedMotion ? {} : { scale: 1.05 }}
-                whileTap={reducedMotion ? {} : { scale: 0.95 }}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+                aria-pressed={theme === "dark"}
+                className="ml-2 hover:scale-105 active:scale-95 transition-transform"
               >
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleTheme}
-                  aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                  aria-pressed={theme === "dark"}
-                  className="ml-2"
-                >
-                  <motion.div
-                    key={theme}
-                    initial={reducedMotion ? {} : { rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={reducedMotion ? {} : { rotate: 90, opacity: 0 }}
-                    transition={
-                      reducedMotion
-                        ? { duration: 0 }
-                        : { duration: 0.2, ease: "easeInOut" }
-                    }
-                  >
-                    {theme === "dark" ? (
-                      <Moon className="h-5 w-5" aria-hidden="true" />
-                    ) : (
-                      <Sun className="h-5 w-5" aria-hidden="true" />
-                    )}
-                  </motion.div>
-                </Button>
-              </motion.div>
+                {theme === "dark" ? (
+                  <Moon className="h-5 w-5" aria-hidden="true" />
+                ) : (
+                  <Sun className="h-5 w-5" aria-hidden="true" />
+                )}
+              </Button>
             )}
           </div>
 
@@ -289,15 +241,12 @@ const Navbar: React.FC = () => {
                   Use the links below to navigate to different sections of the
                   page
                 </SheetDescription>
-                <motion.nav
+                <nav
                   className="mt-8 flex flex-col gap-4"
-                  variants={staggerContainer}
-                  initial="hidden"
-                  animate="visible"
                   aria-label="Mobile navigation"
                 >
                   {navItems.map((item) => (
-                    <motion.div key={item.href} variants={staggerChild}>
+                    <div key={item.href}>
                       <a
                         href={item.href}
                         onClick={(e) => handleNavClick(e, item.href)}
@@ -316,14 +265,14 @@ const Navbar: React.FC = () => {
                       >
                         {item.label}
                       </a>
-                    </motion.div>
+                    </div>
                   ))}
-                </motion.nav>
+                </nav>
               </SheetContent>
             </Sheet>
           </div>
         </nav>
-      </motion.header>
+      </header>
     </>
   );
 };

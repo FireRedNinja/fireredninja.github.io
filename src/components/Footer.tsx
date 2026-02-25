@@ -1,11 +1,7 @@
 import React from "react";
-import { motion } from "motion/react";
 import { profile } from "../data";
-import { useReducedMotion, getHoverScale } from "../lib/motion";
 
 const Footer: React.FC = () => {
-  const reducedMotion = useReducedMotion();
-  const hoverScale = getHoverScale(reducedMotion);
   const currentYear = new Date().getFullYear();
 
   return (
@@ -27,7 +23,7 @@ const Footer: React.FC = () => {
                 const Icon = link.icon;
                 return (
                   <li key={link.name}>
-                    <motion.a
+                    <a
                       href={link.url}
                       target={
                         link.url.startsWith("mailto:") ? undefined : "_blank"
@@ -38,11 +34,10 @@ const Footer: React.FC = () => {
                           : "noopener noreferrer"
                       }
                       aria-label={link.ariaLabel}
-                      className="flex h-11 w-11 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-bg-hover-light hover:text-text-primary dark:text-text-secondary-dark dark:hover:bg-bg-hover-dark dark:hover:text-text-primary-dark"
-                      {...hoverScale}
+                      className="flex h-11 w-11 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-bg-hover-light hover:text-text-primary hover:scale-[1.02] active:scale-[0.98] transition-transform dark:text-text-secondary-dark dark:hover:bg-bg-hover-dark dark:hover:text-text-primary-dark"
                     >
                       <Icon className="h-5 w-5" aria-hidden="true" />
-                    </motion.a>
+                    </a>
                   </li>
                 );
               })}
