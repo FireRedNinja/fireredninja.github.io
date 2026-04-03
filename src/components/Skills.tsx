@@ -48,6 +48,7 @@ const Skills: React.FC = () => {
       });
 
       // Skill rows — batch reveal
+      gsap.set(".skill-row", { yPercent: 20, opacity: 0 });
       ScrollTrigger.batch(".skill-row", {
         onEnter: (batch) =>
           gsap.fromTo(
@@ -138,7 +139,7 @@ const Skills: React.FC = () => {
                   {categorySkills.map((skill) => {
                     const Icon = skill.icon;
                     return (
-                      <button
+                      <span
                         key={skill.name}
                         className="skill-pill inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 cursor-default"
                         style={{ backgroundColor: "#F5EDD8", color: "#1C1208" }}
@@ -156,14 +157,13 @@ const Skills: React.FC = () => {
                           (e.currentTarget as HTMLElement).style.color =
                             "#1C1208";
                         }}
-                        aria-label={skill.name}
                       >
                         <Icon
                           className="h-4 w-4 flex-shrink-0"
                           aria-hidden="true"
                         />
                         <span>{skill.name}</span>
-                      </button>
+                      </span>
                     );
                   })}
                 </div>
