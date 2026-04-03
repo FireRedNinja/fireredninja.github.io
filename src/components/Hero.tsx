@@ -153,7 +153,7 @@ const Hero: React.FC = () => {
     <section
       id="hero"
       ref={containerRef}
-      className="relative flex h-screen flex-col justify-center overflow-hidden px-8 md:px-16 skew-on-scroll"
+      className="relative flex h-screen flex-col justify-center overflow-hidden px-8 md:px-16"
       aria-labelledby="hero-heading"
       onMouseMove={handleMouseMove}
       style={{

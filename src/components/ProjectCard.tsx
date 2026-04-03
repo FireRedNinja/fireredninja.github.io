@@ -138,12 +138,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 image={image}
                 alt={imageAlt || `Screenshot of ${title}`}
                 className="h-full w-full"
-                style={{ objectFit: "cover" }}
+                imgStyle={{ objectFit: "cover" }}
               />
             </div>
           </button>
           {showModal && (
-            <Modal show={showModal} onHide={() => setShowModal(false)} title={title}>
+            <Modal
+              show={showModal}
+              onHide={() => setShowModal(false)}
+              title={title}
+            >
               <GatsbyImage
                 image={image}
                 alt={imageAlt || `Full size screenshot of ${title}`}

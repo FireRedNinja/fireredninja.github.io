@@ -5,10 +5,9 @@ import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 const Skills: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredSkillName, setHoveredSkillName] = useState<string | null>(null);
-  const hoveredSkill =
-    hoveredSkillName
-      ? skills.find((s) => s.name === hoveredSkillName) ?? null
-      : null;
+  const hoveredSkill = hoveredSkillName
+    ? (skills.find((s) => s.name === hoveredSkillName) ?? null)
+    : null;
 
   // ── Scroll-triggered reveals ────────────────────────────────────
   useGSAP(
@@ -77,7 +76,7 @@ const Skills: React.FC = () => {
     <section
       id="skills"
       ref={containerRef}
-      className="skew-on-scroll py-24 px-8 md:px-16"
+      className="py-24 px-8 md:px-16"
       aria-labelledby="skills-heading"
     >
       {/* Section header */}
@@ -145,15 +144,17 @@ const Skills: React.FC = () => {
                         style={{ backgroundColor: "#F5EDD8", color: "#1C1208" }}
                         onMouseEnter={(e) => {
                           setHoveredSkillName(skill.name);
-                          (e.currentTarget as HTMLElement).style.backgroundColor =
-                            "#1C1208";
+                          (
+                            e.currentTarget as HTMLElement
+                          ).style.backgroundColor = "#1C1208";
                           (e.currentTarget as HTMLElement).style.color =
                             "#F5EDD8";
                         }}
                         onMouseLeave={(e) => {
                           setHoveredSkillName(null);
-                          (e.currentTarget as HTMLElement).style.backgroundColor =
-                            "#F5EDD8";
+                          (
+                            e.currentTarget as HTMLElement
+                          ).style.backgroundColor = "#F5EDD8";
                           (e.currentTarget as HTMLElement).style.color =
                             "#1C1208";
                         }}

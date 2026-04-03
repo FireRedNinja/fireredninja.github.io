@@ -117,8 +117,9 @@ const Projects: React.FC = () => {
       });
 
       // 4. Per-project-image parallax
-      const imageEls =
-        containerRef.current?.querySelectorAll(".project-image-inner");
+      const imageEls = containerRef.current?.querySelectorAll(
+        ".project-image-inner"
+      );
       imageEls?.forEach((el) => {
         gsap.fromTo(
           el,
@@ -148,7 +149,7 @@ const Projects: React.FC = () => {
     <section
       id="projects"
       ref={containerRef}
-      className="skew-on-scroll py-24 px-8 md:px-16"
+      className="py-24 px-8 md:px-16"
       aria-labelledby="projects-heading"
     >
       {/* Section header */}
