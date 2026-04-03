@@ -11,13 +11,14 @@ import {
 import { navItems, profile } from "../data";
 import { cn } from "../lib/utils";
 import { gsap, useGSAP } from "../lib/gsap";
+import RollingText from "./RollingText";
 
 type Theme = "light" | "dark";
 
 const Navbar: React.FC = () => {
   const navRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<string>("");
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [inFooter, setInFooter] = useState(false);
   const [theme, setTheme] = useState<Theme>("light");
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -94,7 +95,7 @@ const Navbar: React.FC = () => {
             opacity: 1,
             scale: 1,
             duration: 0.4,
-            ease: "back.out(1.7)",
+            ease: "power4.out",
             clearProps: "all",
           },
           "-=0.2"
@@ -138,16 +139,17 @@ const Navbar: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Handle scroll for navbar background
+  // Footer intersection observer
   useEffect(() => {
     if (typeof window === "undefined") return;
-
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInFooter(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    obs.observe(footer);
+    return () => obs.disconnect();
   }, []);
 
   // Handle navigation click
@@ -164,6 +166,13 @@ const Navbar: React.FC = () => {
     }
     setIsOpen(false);
   };
+
+  // Sections where the background is dark → nav text should be light/cream
+  const lightNavSections = ["projects"];
+  const navIsLight = lightNavSections.includes(activeSection) || inFooter;
+
+  // Accent color: cream on Skills (terracotta bg), terracotta everywhere else
+  const navAccent = activeSection === "skills" ? "#F5EDD8" : "#C4613A";
 
   return (
     <>
@@ -186,12 +195,11 @@ const Navbar: React.FC = () => {
       {/* Navbar */}
       <header
         ref={navRef}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
-          isScrolled
-            ? "bg-bg-light/95 shadow-md backdrop-blur-sm dark:bg-bg-dark/95"
-            : "bg-transparent"
-        )}
+        className="fixed top-0 left-0 right-0 z-40"
+        style={{
+          color: navIsLight ? "#F5EDD8" : "#1C1208",
+          transition: "color 0.5s ease",
+        }}
         role="banner"
       >
         <nav
@@ -202,7 +210,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <a
             href="#hero"
-            className="nav-logo gsap-hidden-fade font-display text-2xl font-bold uppercase tracking-[-0.02em] text-text-primary dark:text-text-primary-dark"
+            className="nav-logo gsap-hidden-fade font-display text-2xl font-bold uppercase tracking-[-0.02em]"
             onClick={(e) => handleNavClick(e, "#hero")}
             aria-label={`${profile.handle} - Go to top of page`}
           >
@@ -220,11 +228,16 @@ const Navbar: React.FC = () => {
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={cn(
-                    "relative px-4 py-2 text-base font-medium transition-colors min-h-[44px] min-w-[44px] inline-flex items-center",
+                    "relative px-4 py-2 text-base font-medium min-h-[44px] min-w-[44px] inline-flex items-center transition-opacity duration-200",
                     activeSection === item.href.replace("#", "")
-                      ? "text-accent-orange dark:text-accent-orange-dark"
-                      : "text-text-secondary hover:text-text-primary dark:text-text-secondary-dark dark:hover:text-text-primary-dark"
+                      ? "opacity-100"
+                      : "opacity-60 hover:opacity-90"
                   )}
+                  style={
+                    activeSection === item.href.replace("#", "")
+                      ? { color: navAccent }
+                      : {}
+                  }
                   aria-label={item.ariaLabel}
                   aria-current={
                     activeSection === item.href.replace("#", "")
@@ -232,15 +245,16 @@ const Navbar: React.FC = () => {
                       : undefined
                   }
                 >
-                  {item.label}
+                  <RollingText>{item.label}</RollingText>
                   {/* Underline */}
                   <span
                     className={cn(
-                      "absolute bottom-0 left-4 right-4 h-0.5 origin-left bg-accent-orange transition-transform duration-200 dark:bg-accent-orange-dark",
+                      "absolute bottom-0 left-4 right-4 h-0.5 origin-left transition-transform duration-200",
                       activeSection === item.href.replace("#", "")
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100"
                     )}
+                    style={{ backgroundColor: navAccent }}
                   />
                 </a>
               </div>
@@ -254,7 +268,7 @@ const Navbar: React.FC = () => {
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 aria-pressed={theme === "dark"}
-                className="nav-theme-toggle gsap-hidden-fade ml-2 hover:scale-105 active:scale-95 transition-transform"
+                className="nav-theme-toggle gsap-hidden-fade ml-2"
               >
                 {theme === "dark" ? (
                   <Moon className="h-5 w-5" aria-hidden="true" />
@@ -312,11 +326,16 @@ const Navbar: React.FC = () => {
                         href={item.href}
                         onClick={(e) => handleNavClick(e, item.href)}
                         className={cn(
-                          "block px-4 py-3 text-lg font-medium transition-colors rounded-lg min-h-[44px]",
+                          "block px-4 py-3 text-lg font-medium rounded-lg min-h-[44px] transition-opacity duration-200",
                           activeSection === item.href.replace("#", "")
-                            ? "bg-bg-hover-light text-accent-orange dark:bg-bg-hover-dark dark:text-accent-orange-dark"
-                            : "text-text-secondary hover:bg-bg-hover-light hover:text-text-primary dark:text-text-secondary-dark dark:hover:bg-bg-hover-dark dark:hover:text-text-primary-dark"
+                            ? "opacity-100"
+                            : "opacity-60 hover:opacity-90"
                         )}
+                        style={
+                          activeSection === item.href.replace("#", "")
+                            ? { color: navAccent }
+                            : {}
+                        }
                         aria-label={item.ariaLabel}
                         aria-current={
                           activeSection === item.href.replace("#", "")
