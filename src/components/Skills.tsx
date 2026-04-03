@@ -1,16 +1,14 @@
-import React, { useRef } from "react";
-import { Badge } from "./ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
+import React, { useRef, useState } from "react";
 import { skills, skillCategories } from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 
 const Skills: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [hoveredSkillName, setHoveredSkillName] = useState<string | null>(null);
+  const hoveredSkill =
+    hoveredSkillName
+      ? skills.find((s) => s.name === hoveredSkillName) ?? null
+      : null;
 
   // ── Scroll-triggered reveals ────────────────────────────────────
   useGSAP(
@@ -49,35 +47,21 @@ const Skills: React.FC = () => {
         },
       });
 
-      // Category headings stagger in
-      gsap.set(".skill-category-heading", { opacity: 0, x: -20 });
-      ScrollTrigger.batch(".skill-category-heading", {
+      // Skill rows — batch reveal
+      ScrollTrigger.batch(".skill-row", {
         onEnter: (batch) =>
-          gsap.to(batch, {
-            opacity: 1,
-            x: 0,
-            stagger: 0.08,
-            duration: 0.5,
-            ease: "power3.out",
-          }),
-        start: "top 90%",
-        once: true,
-      });
-
-      // Skill badges — batch pop with back.out
-      gsap.set(".skill-badge", { opacity: 0, scale: 0.8, y: 20 });
-      ScrollTrigger.batch(".skill-badge", {
-        onEnter: (batch) =>
-          gsap.to(batch, {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            stagger: 0.03,
-            duration: 0.5,
-            ease: "back.out(1.7)",
-            clearProps: "all",
-          }),
-        start: "top 90%",
+          gsap.fromTo(
+            batch,
+            { yPercent: 20, opacity: 0 },
+            {
+              yPercent: 0,
+              opacity: 1,
+              stagger: 0.06,
+              duration: 0.6,
+              ease: "power3.out",
+            }
+          ),
+        start: "top 88%",
         once: true,
       });
 
@@ -92,83 +76,122 @@ const Skills: React.FC = () => {
     <section
       id="skills"
       ref={containerRef}
-      className="bg-bg-muted-light py-24 px-4 dark:bg-bg-muted-dark"
+      className="skew-on-scroll py-24 px-8 md:px-16"
       aria-labelledby="skills-heading"
     >
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          {/* Section index number */}
-          <span
-            className="skills-index mb-2 block font-sans text-xs font-medium uppercase tracking-[0.25em] text-accent-orange dark:text-accent-orange-dark"
-            aria-hidden="true"
-          >
-            02
-          </span>
-          {/* Oversized editorial heading */}
-          <div className="overflow-hidden">
-            <h2
-              id="skills-heading"
-              className="font-display font-bold uppercase text-text-primary dark:text-text-primary-dark"
-              style={{
-                fontSize: "clamp(2.5rem, 8vw, 9rem)",
-                lineHeight: 0.9,
-                letterSpacing: "-0.03em",
-              }}
+      {/* Section header */}
+      <div className="mb-16">
+        <span
+          aria-hidden="true"
+          className="skills-index mb-2 block font-sans text-xs font-medium uppercase tracking-[0.25em]"
+          style={{ color: "#1C1208", opacity: 0.5 }}
+        >
+          02
+        </span>
+        <h2
+          id="skills-heading"
+          className="font-display font-bold uppercase"
+          style={{
+            color: "#1C1208",
+            fontSize: "clamp(2.5rem, 8vw, 9rem)",
+            lineHeight: 0.9,
+            letterSpacing: "-0.03em",
+          }}
+        >
+          Skills
+        </h2>
+      </div>
+
+      {/* Category rows */}
+      <div className="space-y-0">
+        {skillCategories.map((category, catIndex) => {
+          const categorySkills = skills.filter(
+            (s) => s.category === category.id
+          );
+          const isActive =
+            hoveredSkill !== null &&
+            categorySkills.some((s) => s.name === hoveredSkillName);
+
+          return (
+            <div
+              key={category.id}
+              className="skill-row flex flex-col gap-4 py-6 md:flex-row md:gap-8 md:items-start"
+              style={
+                catIndex > 0
+                  ? { borderTop: "1px solid rgba(245,237,216,0.2)" }
+                  : {}
+              }
             >
-              Skills
-            </h2>
-          </div>
-        </div>
+              {/* Left: category label */}
+              <div className="skill-category-heading w-full md:w-44 md:flex-shrink-0 md:pt-1">
+                <h3
+                  className="font-display font-semibold uppercase text-sm tracking-wide"
+                  style={{ color: "#1C1208" }}
+                >
+                  {category.label}
+                </h3>
+              </div>
 
-        <TooltipProvider delayDuration={300}>
-          <div className="space-y-8">
-            {skillCategories.map((category) => {
-              const categorySkills = skills.filter(
-                (skill) => skill.category === category.id
-              );
-
-              return (
-                <div key={category.id}>
-                  <h3 className="skill-category-heading mb-4 text-xl font-semibold text-text-primary dark:text-text-primary-dark">
-                    {category.label}
-                  </h3>
-                  <ul
-                    className="flex flex-wrap gap-3"
-                    role="list"
-                    aria-label={`${category.label} skills`}
-                  >
-                    {categorySkills.map((skill) => {
-                      const Icon = skill.icon;
-                      return (
-                        <li key={skill.name} className="skill-badge">
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="hover:scale-[1.02] active:scale-[0.98] transition-transform">
-                                <Badge
-                                  variant="secondary"
-                                  className="cursor-default gap-2 px-4 py-2 text-base"
-                                >
-                                  <Icon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
-                                  <span>{skill.name}</span>
-                                </Badge>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>{skill.description}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </li>
-                      );
-                    })}
-                  </ul>
+              {/* Right: pills + description */}
+              <div className="flex-1">
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {categorySkills.map((skill) => {
+                    const Icon = skill.icon;
+                    return (
+                      <button
+                        key={skill.name}
+                        className="skill-pill inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 cursor-default"
+                        style={{ backgroundColor: "#F5EDD8", color: "#1C1208" }}
+                        onMouseEnter={(e) => {
+                          setHoveredSkillName(skill.name);
+                          (e.currentTarget as HTMLElement).style.backgroundColor =
+                            "#1C1208";
+                          (e.currentTarget as HTMLElement).style.color =
+                            "#F5EDD8";
+                        }}
+                        onMouseLeave={(e) => {
+                          setHoveredSkillName(null);
+                          (e.currentTarget as HTMLElement).style.backgroundColor =
+                            "#F5EDD8";
+                          (e.currentTarget as HTMLElement).style.color =
+                            "#1C1208";
+                        }}
+                        aria-label={skill.name}
+                      >
+                        <Icon
+                          className="h-4 w-4 flex-shrink-0"
+                          aria-hidden="true"
+                        />
+                        <span>{skill.name}</span>
+                      </button>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
-        </TooltipProvider>
+
+                {/* Inline description */}
+                <div
+                  style={{
+                    minHeight: "1.4em",
+                    transition: "opacity 0.25s ease",
+                    opacity: isActive ? 1 : 0,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "var(--font-editorial)",
+                      fontStyle: "italic",
+                      color: "#1C1208",
+                      fontSize: "0.875rem",
+                      opacity: 0.75,
+                    }}
+                  >
+                    {isActive ? hoveredSkill!.description : "\u00a0"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
