@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         },
       });
 
-      // Copyright text fades up
+      // Brand + copyright fades up
       gsap.set(".footer-copyright", { opacity: 0, y: 20 });
       gsap.to(".footer-copyright", {
         opacity: 1,
@@ -40,14 +40,18 @@ const Footer: React.FC = () => {
       });
 
       // Social icons pop with rotation
-      gsap.set(".footer-social-icon", { scale: 0, rotation: -180, opacity: 0 });
+      gsap.set(".footer-social-icon", {
+        scale: 0,
+        rotation: -180,
+        opacity: 0,
+      });
       gsap.to(".footer-social-icon", {
         scale: 1,
         rotation: 0,
         opacity: 1,
         stagger: 0.1,
         duration: 0.5,
-        ease: "back.out(1.7)",
+        ease: "power4.out",
         clearProps: "all",
         scrollTrigger: {
           trigger: footerRef.current,
@@ -62,52 +66,56 @@ const Footer: React.FC = () => {
   return (
     <footer
       ref={footerRef}
-      className="bg-bg-muted-light py-12 px-4 dark:bg-bg-muted-dark"
+      className="py-16 px-8 md:px-16"
       role="contentinfo"
     >
-      {/* Animated border line */}
-      <div
-        className="footer-border mx-auto mb-12 h-px max-w-6xl origin-center bg-border-light dark:bg-border-dark"
-        aria-hidden="true"
-      />
-
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          {/* Copyright */}
-          <p className="footer-copyright text-sm text-text-secondary dark:text-text-secondary-dark">
-            © {currentYear} {profile.name}. All rights reserved.
-          </p>
+        {/* Terracotta rule */}
+        <div
+          className="footer-border mb-12"
+          style={{ height: '1px', backgroundColor: '#C4613A', transformOrigin: 'center' }}
+          aria-hidden="true"
+        />
 
-          {/* Social Links */}
-          <nav aria-label="Social media links">
-            <ul className="flex items-center gap-4" role="list">
-              {profile.socialLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <li key={link.name} className="footer-social-icon">
-                    <MagneticButton strength={0.45}>
-                      <a
-                        href={link.url}
-                        target={
-                          link.url.startsWith("mailto:") ? undefined : "_blank"
-                        }
-                        rel={
-                          link.url.startsWith("mailto:")
-                            ? undefined
-                            : "noopener noreferrer"
-                        }
-                        aria-label={link.ariaLabel}
-                        className="flex h-11 w-11 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-bg-hover-light hover:text-text-primary dark:text-text-secondary-dark dark:hover:bg-bg-hover-dark dark:hover:text-text-primary-dark"
-                      >
-                        <Icon className="h-5 w-5" aria-hidden="true" />
-                      </a>
-                    </MagneticButton>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+        {/* Row 1: brand mark + copyright */}
+        <div className="footer-copyright flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between mb-10">
+          <span
+            className="font-display font-bold uppercase"
+            style={{ color: '#F5EDD8', fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', letterSpacing: '-0.02em' }}
+          >
+            {profile.handle}
+          </span>
+          <span className="font-sans text-sm" style={{ color: 'rgba(245,237,216,0.45)' }}>
+            © {currentYear}
+          </span>
         </div>
+
+        {/* Row 2: social links */}
+        <nav aria-label="Social media links">
+          <ul className="flex items-center gap-4" role="list">
+            {profile.socialLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <li key={link.name} className="footer-social-icon">
+                  <MagneticButton strength={0.45}>
+                    <a
+                      href={link.url}
+                      target={link.url.startsWith("mailto:") ? undefined : "_blank"}
+                      rel={link.url.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                      aria-label={link.ariaLabel}
+                      className="flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-200"
+                      style={{ color: '#F5EDD8' }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#C4613A'; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#F5EDD8'; }}
+                    >
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </a>
+                  </MagneticButton>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
     </footer>
   );
