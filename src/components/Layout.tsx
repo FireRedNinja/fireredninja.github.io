@@ -36,7 +36,7 @@ const Layout: React.FC<LayoutProps> = ({
     gsap.set(wrapperRef.current, { backgroundColor: '#F5EDD8' });
 
     sectionColors.forEach(({ selector, color }) => {
-      const el = document.querySelector(selector);
+      const el = wrapperRef.current?.querySelector(selector);
       if (!el) return;
 
       ScrollTrigger.create({
@@ -64,6 +64,7 @@ const Layout: React.FC<LayoutProps> = ({
     <div
       ref={wrapperRef}
       className="relative min-h-screen w-full"
+      style={{ backgroundColor: '#F5EDD8' }}
     >
       {showNavbar && <Navbar />}
       <main
