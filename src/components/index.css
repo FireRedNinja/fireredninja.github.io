@@ -1,134 +1,50 @@
 @import "tailwindcss";
-
-/* =============================================
- * PP Mori — self-hosted sans-serif
- * ============================================= */
-@font-face {
-  font-family: "PP Mori";
-  src: url("/fonts/PPMori-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  size-adjust: 100%;
-  ascent-override: 95%;
-  descent-override: 25%;
-  line-gap-override: 0%;
-}
-
-@font-face {
-  font-family: "PP Mori";
-  src: url("/fonts/PPMori-Italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "PP Mori";
-  src: url("/fonts/PPMori-Semibold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-  size-adjust: 100%;
-  ascent-override: 95%;
-  descent-override: 25%;
-  line-gap-override: 0%;
-}
-
-@font-face {
-  font-family: "PP Mori";
-  src: url("/fonts/PPMori-SemiboldItalic.woff2") format("woff2");
-  font-weight: 600;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "PP Mori";
-  src: url("/fonts/PPMori-Extralight.woff2") format("woff2");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "PP Mori";
-  src: url("/fonts/PPMori-ExtralightItalic.woff2") format("woff2");
-  font-weight: 200;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* =============================================
- * Comic Cat — self-hosted display typeface
- * ============================================= */
-@font-face {
-  font-family: "Comic Cat";
-  src:
-    url("/fonts/ComicCAT.woff2") format("woff2"),
-    url("/fonts/ComicCAT.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  size-adjust: 105%;
-  ascent-override: 90%;
-  descent-override: 25%;
-  line-gap-override: 0%;
-}
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap");
 
 /* Configure dark mode to use class strategy */
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
   /* ===========================================
-   * WCAG 2.2 AAA Compliant Color System
-   * Earthy Zinc palette with Orange accent
-   * All text colors meet 7:1 contrast ratio
+   * Canvas palette — section colors
    * =========================================== */
 
   /* Typography */
-  --font-display: "Comic Cat", cursive;
-  --font-sans: "PP Mori", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Syne", sans-serif;
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-editorial: "Instrument Serif", Georgia, serif;
 
-  /* Primary accent colors - Orange (Fire theme) */
-  --color-accent-orange: #f97316;
-  --color-accent-orange-hover: #ea580c;
-  --color-accent-orange-dark: #fb923c;
-  --color-accent-orange-dark-hover: #fdba74;
+  /* Canvas palette — section colors */
+  --color-canvas-cream: #F5EDD8;
+  --color-canvas-walnut: #1C1208;
+  --color-canvas-terracotta: #C4613A;
+  --color-canvas-forest: #1A2B1F;
 
-  /* Secondary accent - Zinc tones */
-  --color-accent-zinc: #71717a;
-  --color-accent-zinc-dark: #a1a1aa;
+  /* Text colors */
+  --color-text-primary: #1C1208;      /* walnut on light */
+  --color-text-secondary: #3D2B1A;    /* slightly lighter walnut */
+  --color-text-tertiary: #6B4F3A;     /* warm medium brown */
+  --color-text-on-dark: #F5EDD8;      /* cream on dark sections */
+  --color-text-on-dark-secondary: rgba(245, 237, 216, 0.7);
 
-  /* Text colors - Light mode (AAA: 7:1+ contrast on zinc-50) */
-  --color-text-primary: #09090b;
-  --color-text-secondary: #3f3f46;
-  --color-text-tertiary: #52525b;
+  /* Accent */
+  --color-accent: #C4613A;            /* terracotta */
+  --color-accent-hover: #A84E2C;      /* darker terracotta */
 
-  /* Text colors - Dark mode (AAA: 7:1+ contrast on zinc-950) */
-  --color-text-primary-dark: #fafafa;
-  --color-text-secondary-dark: #d4d4d8;
-  --color-text-tertiary-dark: #a1a1aa;
+  /* Background colors (hero default) */
+  --color-bg-light: #F5EDD8;
+  --color-bg-dark: #1C1208;
+  --color-bg-card-light: #EDE5CE;
+  --color-bg-card-dark: #1A2B1F;
 
   /* Border colors */
-  --color-border-light: #e4e4e7;
-  --color-border-dark: #3f3f46;
-  --color-border-hover-light: #d4d4d8;
-  --color-border-hover-dark: #52525b;
+  --color-border-light: #D4C8B0;
+  --color-border-dark: #2E4035;
 
-  /* Background colors - Zinc scale */
-  --color-bg-light: #fafafa;
-  --color-bg-dark: #09090b;
-  --color-bg-hover-light: #f4f4f5;
-  --color-bg-hover-dark: #27272a;
-  --color-bg-card-light: #ffffff;
-  --color-bg-card-dark: #18181b;
-  --color-bg-muted-light: #f4f4f5;
-  --color-bg-muted-dark: #27272a;
-
-  /* Focus ring colors - Orange for visibility */
-  --color-focus-ring: #f97316;
-  --color-focus-ring-dark: #fb923c;
+  /* Focus ring */
+  --color-focus-ring: #C4613A;
+  --color-focus-ring-dark: #E07A55;
 
   /* ShadCN compatible CSS variables */
   --radius: 0.5rem;
@@ -142,35 +58,25 @@
  * CSS Custom Properties for ShadCN theming
  * =========================================== */
 :root {
-  /* Zinc-50 background */
-  --background: 0 0% 98%;
-  /* Zinc-950 foreground */
-  --foreground: 0 0% 3.9%;
-  /* White card */
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 3.9%;
-  /* Orange-500 primary */
-  --primary: 24.6 95% 53.1%;
-  --primary-foreground: 0 0% 100%;
-  /* Zinc-100 secondary */
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 0 0% 9%;
-  /* Zinc-100 muted */
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  /* Zinc-100 accent */
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 0 0% 9%;
-  /* Red destructive */
+  --background: 39 60% 90%;          /* cream */
+  --foreground: 25 75% 7%;           /* walnut */
+  --card: 39 50% 87%;
+  --card-foreground: 25 75% 7%;
+  --popover: 39 50% 87%;
+  --popover-foreground: 25 75% 7%;
+  --primary: 18 57% 49%;             /* terracotta */
+  --primary-foreground: 39 60% 90%;
+  --secondary: 39 30% 82%;
+  --secondary-foreground: 25 75% 7%;
+  --muted: 39 30% 82%;
+  --muted-foreground: 25 40% 35%;
+  --accent: 39 30% 82%;
+  --accent-foreground: 25 75% 7%;
   --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  /* Zinc-200 border */
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  /* Orange ring */
-  --ring: 24.6 95% 53.1%;
+  --destructive-foreground: 39 60% 90%;
+  --border: 39 30% 78%;
+  --input: 39 30% 78%;
+  --ring: 18 57% 49%;
 }
 
 .dark {
@@ -231,8 +137,8 @@ html {
 }
 
 body {
-  background-color: #fafafa;
-  color: #09090b;
+  background-color: #F5EDD8;
+  color: #1C1208;
   font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   /* Max line width for readability (WCAG 1.4.8) */
@@ -241,11 +147,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* Prevent horizontal overflow from marquee/full-bleed type */
   overflow-x: hidden;
-}
-
-html.dark body {
-  background-color: #09090b;
-  color: #fafafa;
 }
 
 /* ===========================================
@@ -388,25 +289,16 @@ h3 {
 
 .text-stroke-accent {
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 2px var(--color-accent-orange);
+  -webkit-text-stroke: 2px var(--color-accent);
   paint-order: stroke fill;
-}
-
-.dark .text-stroke-accent {
-  -webkit-text-stroke-color: var(--color-accent-orange-dark);
 }
 
 /* ===========================================
  * Selection styles (high contrast)
  * =========================================== */
 ::selection {
-  background-color: var(--color-accent-blue);
-  color: white;
-}
-
-.dark ::selection {
-  background-color: var(--color-accent-blue-dark);
-  color: #0f172a;
+  background-color: var(--color-accent);
+  color: var(--color-canvas-cream);
 }
 
 /* ===========================================
@@ -471,4 +363,13 @@ h3 {
 
 .gsap-hidden-fade {
   opacity: 0;
+}
+
+/* ===========================================
+ * Velocity skew — ensure transform-origin
+ * is at top so skew feels natural
+ * =========================================== */
+.skew-on-scroll {
+  transform-origin: center top;
+  will-change: transform;
 }
