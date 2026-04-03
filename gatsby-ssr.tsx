@@ -33,29 +33,8 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({
 }) => {
   setPreBodyComponents([<ThemeScript key="theme-script" />]);
   setHeadComponents([
-    <link
-      key="font-mori-semibold"
-      rel="preload"
-      href="/fonts/PPMori-Semibold.woff2"
-      as="font"
-      type="font/woff2"
-      crossOrigin="anonymous"
-    />,
-    <link
-      key="font-comic-cat"
-      rel="preload"
-      href="/fonts/ComicCAT.woff2"
-      as="font"
-      type="font/woff2"
-      crossOrigin="anonymous"
-    />,
-    <link
-      key="font-mori-regular"
-      rel="preload"
-      href="/fonts/PPMori-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossOrigin="anonymous"
-    />,
+    <link key="preconnect-google-fonts" rel="preconnect" href="https://fonts.googleapis.com" />,
+    <link key="preconnect-gstatic" rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />,
+    <link key="preconnect-fontshare" rel="preconnect" href="https://api.fontshare.com" />,
   ]);
 };

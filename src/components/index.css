@@ -200,7 +200,7 @@ body {
 
 .dark .skip-link {
   background-color: var(--color-focus-ring-dark);
-  color: #0f172a;
+  color: var(--color-canvas-walnut);
 }
 
 /* ===========================================
