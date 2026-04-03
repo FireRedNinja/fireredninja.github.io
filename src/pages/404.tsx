@@ -4,7 +4,7 @@ import NotFound from "../components/NotFound";
 import Layout from "../components/Layout";
 
 const NotFoundPage = () => (
-  <Layout header={false}>
+  <Layout showNavbar={false} showFooter={false}>
     <NotFound />
   </Layout>
 );

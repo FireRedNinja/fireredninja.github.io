@@ -21,7 +21,6 @@ export function customRender(
 // Accessibility helper
 export async function expectNoA11yViolations(container: HTMLElement) {
   const results = await axe(container);
-  // @ts-expect-error - expect is defined in test environment
   expect(results).toHaveNoViolations();
 }
 
@@ -38,7 +37,9 @@ export function createMockProfile(overrides?: Partial<Profile>): Profile {
     name: "Test User",
     firstName: "Test",
     role: "Software Engineer",
+    roles: ["Software Engineer", "Test Designer"],
     location: "Test Location",
+    handle: "TestUser",
     socialLinks: [
       {
         name: "GitHub",
