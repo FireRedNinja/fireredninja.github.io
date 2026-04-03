@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Menu, Moon, Sun } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -13,13 +13,10 @@ import { cn } from "../lib/utils";
 import { gsap, useGSAP } from "../lib/gsap";
 import RollingText from "./RollingText";
 
-type Theme = "light" | "dark";
-
 const Navbar: React.FC = () => {
   const navRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<string>("");
   const [inFooter, setInFooter] = useState(false);
-  const [theme, setTheme] = useState<Theme>("light");
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -27,27 +24,6 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  // Initialize theme on mount
-  useEffect(() => {
-    if (!isMounted) return;
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
-  }, [isMounted]);
-
-  // Toggle theme function
-  const toggleTheme = useCallback((): void => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [theme]);
 
   // ── Navbar entrance (delayed to play after hero) ──────────────
   useGSAP(
@@ -75,31 +51,18 @@ const Navbar: React.FC = () => {
         ".nav-logo",
         { opacity: 0, x: -20 },
         { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }
-      )
-        .fromTo(
-          ".nav-link",
-          { opacity: 0, y: -10 },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.08,
-            duration: 0.5,
-            ease: "power3.out",
-          },
-          "-=0.3"
-        )
-        .fromTo(
-          ".nav-theme-toggle",
-          { opacity: 0, scale: 0.8 },
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 0.4,
-            ease: "power4.out",
-            clearProps: "all",
-          },
-          "-=0.2"
-        );
+      ).fromTo(
+        ".nav-link",
+        { opacity: 0, y: -10 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.08,
+          duration: 0.5,
+          ease: "power3.out",
+        },
+        "-=0.3"
+      );
     },
     { scope: navRef, dependencies: [isMounted] }
   );
@@ -168,7 +131,7 @@ const Navbar: React.FC = () => {
   };
 
   // Sections where the background is dark → nav text should be light/cream
-  const lightNavSections = ["projects"];
+  const lightNavSections = ["projects", "skills"];
   const navIsLight = lightNavSections.includes(activeSection) || inFooter;
 
   // Accent color: cream on Skills (terracotta bg), terracotta everywhere else
@@ -260,45 +223,10 @@ const Navbar: React.FC = () => {
               </div>
             ))}
 
-            {/* Theme Toggle - Desktop */}
-            {isMounted && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleTheme}
-                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                aria-pressed={theme === "dark"}
-                className="nav-theme-toggle gsap-hidden-fade ml-2 hover:[color:inherit]"
-              >
-                {theme === "dark" ? (
-                  <Moon className="h-5 w-5" aria-hidden="true" />
-                ) : (
-                  <Sun className="h-5 w-5" aria-hidden="true" />
-                )}
-              </Button>
-            )}
           </div>
 
           {/* Mobile Navigation */}
           <div className="flex items-center gap-2 md:hidden">
-            {/* Theme Toggle - Mobile */}
-            {isMounted && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleTheme}
-                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                aria-pressed={theme === "dark"}
-                className="hover:[color:inherit]"
-              >
-                {theme === "dark" ? (
-                  <Moon className="h-5 w-5" aria-hidden="true" />
-                ) : (
-                  <Sun className="h-5 w-5" aria-hidden="true" />
-                )}
-              </Button>
-            )}
-
             {/* Mobile Menu Sheet */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>

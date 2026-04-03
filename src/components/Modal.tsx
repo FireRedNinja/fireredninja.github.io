@@ -70,7 +70,7 @@ const Modal: React.FC<ModalProps> = ({ show, onHide, children, title }) => {
           opacity: 1,
           y: 0,
           duration: 0.4,
-          ease: "back.out(1.4)",
+          ease: "power4.out",
           delay: 0.1,
         }
       );
@@ -78,16 +78,23 @@ const Modal: React.FC<ModalProps> = ({ show, onHide, children, title }) => {
     { dependencies: [show] }
   );
 
+  // Close when clicking outside the content box (overlay / backdrop area)
   const closeModal = (e: React.MouseEvent<HTMLDivElement>): void => {
-    if (modalRef.current === e.target) {
+    if (!contentRef.current?.contains(e.target as Node)) {
       onHide();
     }
   };
 
   const keyPress = useCallback(
     (e: globalThis.KeyboardEvent): void => {
-      if (e.key === "Escape" && show) {
+      if (!show) return;
+      if (e.key === "Escape") {
         onHide();
+      }
+      if (e.key === "Tab") {
+        // Close button is the only focusable element — keep focus contained
+        e.preventDefault();
+        closeButtonRef.current?.focus();
       }
     },
     [show, onHide]
@@ -120,7 +127,7 @@ const Modal: React.FC<ModalProps> = ({ show, onHide, children, title }) => {
       {/* Overlay */}
       <div
         ref={overlayRef}
-        className="absolute inset-0 bg-black/80"
+        className="absolute inset-0 bg-zinc-950/80"
         aria-hidden="true"
       />
 
@@ -135,7 +142,11 @@ const Modal: React.FC<ModalProps> = ({ show, onHide, children, title }) => {
           variant="ghost"
           size="icon"
           onClick={onHide}
-          className="absolute -top-2 -right-2 z-10 rounded-full bg-bg-card-light/90 text-text-primary shadow-lg hover:bg-bg-card-light dark:bg-bg-card-dark/90 dark:text-text-primary-dark dark:hover:bg-bg-card-dark"
+          className="absolute -top-2 -right-2 z-10 rounded-full shadow-lg"
+          style={{
+            backgroundColor: "rgba(245,237,216,0.95)",
+            color: "#1C1208",
+          }}
           aria-label="Close image preview"
         >
           <X className="h-5 w-5" aria-hidden="true" />
