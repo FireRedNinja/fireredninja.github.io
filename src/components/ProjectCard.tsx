@@ -32,7 +32,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <article className="project-entry mb-20 md:mb-32" aria-label={title}>
+    <article className="project-entry mb-20 md:mb-32">
       {/* Numbered rule */}
       <div className="flex items-center gap-4 mb-6">
         <span
