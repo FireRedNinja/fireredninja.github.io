@@ -268,7 +268,7 @@ const Navbar: React.FC = () => {
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 aria-pressed={theme === "dark"}
-                className="nav-theme-toggle gsap-hidden-fade ml-2"
+                className="nav-theme-toggle gsap-hidden-fade ml-2 hover:[color:inherit]"
               >
                 {theme === "dark" ? (
                   <Moon className="h-5 w-5" aria-hidden="true" />
@@ -289,6 +289,7 @@ const Navbar: React.FC = () => {
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 aria-pressed={theme === "dark"}
+                className="hover:[color:inherit]"
               >
                 {theme === "dark" ? (
                   <Moon className="h-5 w-5" aria-hidden="true" />
