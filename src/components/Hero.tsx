@@ -185,7 +185,7 @@ const Hero: React.FC = () => {
               }}
               onMouseEnter={handleLetterEnter}
               onMouseLeave={handleLetterLeave}
-              aria-hidden={i > 0 ? "true" : undefined}
+              aria-hidden="true"
             >
               {letter}
             </span>
