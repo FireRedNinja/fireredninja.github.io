@@ -12,6 +12,7 @@ export interface Profile {
   name: string;
   firstName: string;
   role: string;
+  roles: string[];
   location: string;
   socialLinks: SocialLink[];
   handle: string;
@@ -21,6 +22,13 @@ export const profile: Profile = {
   name: "Noel Rajan",
   firstName: "Noel",
   role: "Professional Vibe Coder",
+  roles: [
+    "Professional Vibe Coder",
+    "Frontend Engineer",
+    "Full-Stack Builder",
+    "Motion Obsessive",
+    "Game Jammer",
+  ],
   location: "United Kingdom",
   handle: "FireRedNinja",
   socialLinks: [

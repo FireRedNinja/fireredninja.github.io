@@ -3,19 +3,17 @@ import { graphql, useStaticQuery } from "gatsby";
 import { IGatsbyImageData } from "gatsby-plugin-image";
 import { projectsList } from "../data";
 import ProjectCard from "./ProjectCard";
-import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
+import { gsap, SplitText, useGSAP } from "../lib/gsap";
 
 interface ImageNode {
   node: {
     id: string;
     gatsbyImageData: IGatsbyImageData;
-    fluid: {
-      originalName: string;
-    };
+    fluid: { originalName: string };
   };
 }
 
-const Projects: React.FC = () => {
+const ProjectsSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const data = useStaticQuery(graphql`
@@ -30,9 +28,7 @@ const Projects: React.FC = () => {
               quality: 80
               formats: [AUTO, WEBP, AVIF]
             )
-            fluid {
-              originalName
-            }
+            fluid { originalName }
           }
         }
       }
@@ -41,105 +37,68 @@ const Projects: React.FC = () => {
 
   const images: ImageNode[] = data.image.edges;
 
-  const getProjectImage = (
-    imageName?: string
-  ): IGatsbyImageData | undefined => {
+  const getProjectImage = (imageName?: string): IGatsbyImageData | undefined => {
     if (!imageName) return undefined;
-    const projectImage = images.find(
-      (image) => image.node.fluid.originalName === imageName
-    );
-    return projectImage?.node.gatsbyImageData;
+    return images.find(img => img.node.fluid.originalName === imageName)?.node.gatsbyImageData;
   };
 
   useGSAP(
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      // 1. Section index reveal
+      // Heading char reveal
+      const headingSplit = SplitText.create("#projects-heading", { type: "chars", mask: "chars" });
       gsap.fromTo(
-        ".projects-index",
-        { yPercent: 100, opacity: 0 },
-        {
-          yPercent: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 85%",
-            once: true,
-          },
-        }
-      );
-
-      // 2. Heading word reveal via SplitText
-      const headingSplit = SplitText.create("#projects-heading", {
-        type: "words",
-        mask: "words",
-      });
-      gsap.fromTo(
-        headingSplit.words,
+        headingSplit.chars,
         { yPercent: 110 },
         {
           yPercent: 0,
-          duration: 0.8,
+          duration: 0.9,
           ease: "power4.out",
-          stagger: 0.03,
-          scrollTrigger: {
-            trigger: "#projects-heading",
-            start: "top 85%",
-            once: true,
-          },
+          stagger: 0.025,
+          scrollTrigger: { trigger: "#projects-heading", start: "top 88%", once: true },
         }
       );
 
-      // 3. Per-project-title word reveals
+      // Per-project title reveals
       const titleEls = containerRef.current?.querySelectorAll(".project-title");
       const titleSplits: InstanceType<typeof SplitText>[] = [];
-      titleEls?.forEach((el) => {
-        const split = SplitText.create(el, { type: "words", mask: "words" });
+      titleEls?.forEach(el => {
+        const split = SplitText.create(el, { type: "chars", mask: "chars" });
         titleSplits.push(split);
         gsap.fromTo(
-          split.words,
-          { yPercent: 100 },
+          split.chars,
+          { yPercent: 110 },
           {
             yPercent: 0,
             duration: 0.7,
             ease: "power3.out",
-            stagger: 0.03,
-            scrollTrigger: {
-              trigger: el,
-              start: "top 88%",
-              once: true,
-            },
+            stagger: 0.018,
+            scrollTrigger: { trigger: el, start: "top 90%", once: true },
           }
         );
       });
 
-      // 4. Per-project-image parallax
-      const imageEls = containerRef.current?.querySelectorAll(
-        ".project-image-inner"
-      );
-      imageEls?.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { yPercent: -10 },
-          {
-            yPercent: 10,
-            ease: "none",
-            scrollTrigger: {
-              trigger: el.parentElement,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
-            },
-          }
-        );
+      // Image parallax
+      containerRef.current?.querySelectorAll(".project-image-inner").forEach(el => {
+        gsap.fromTo(el, { yPercent: -8 }, {
+          yPercent: 8,
+          ease: "none",
+          scrollTrigger: { trigger: el.parentElement, start: "top bottom", end: "bottom top", scrub: 1.2 },
+        });
+      });
+
+      // Project meta fade-up
+      gsap.utils.toArray<Element>(".project-meta").forEach(el => {
+        gsap.fromTo(el, { opacity: 0, y: 18 }, {
+          opacity: 1, y: 0, duration: 0.6, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 92%", once: true },
+        });
       });
 
       return () => {
         headingSplit.revert();
-        titleSplits.forEach((s) => s.revert());
+        titleSplits.forEach(s => s.revert());
       };
     },
     { scope: containerRef }
@@ -151,23 +110,16 @@ const Projects: React.FC = () => {
       ref={containerRef}
       className="py-24 px-8 md:px-16"
       aria-labelledby="projects-heading"
+      style={{ borderTop: "1px solid rgba(240,240,238,0.06)" }}
     >
-      {/* Section header */}
-      <div className="mb-20">
-        <span
-          aria-hidden="true"
-          className="projects-index mb-2 block font-sans text-xs font-medium uppercase tracking-[0.25em]"
-          style={{ color: "#C4613A" }}
-        >
-          01
-        </span>
+      <div className="mb-24 overflow-hidden">
         <h2
           id="projects-heading"
-          className="font-display font-bold uppercase"
+          className="font-display font-black uppercase"
           style={{
-            color: "#F5EDD8",
-            fontSize: "clamp(2.5rem, 8vw, 9rem)",
-            lineHeight: 0.9,
+            color: "#F0F0EE",
+            fontSize: "clamp(3rem, 10vw, 11rem)",
+            lineHeight: 0.88,
             letterSpacing: "-0.03em",
           }}
         >
@@ -175,7 +127,6 @@ const Projects: React.FC = () => {
         </h2>
       </div>
 
-      {/* Numbered project spreads — all projects, personal then hackathon */}
       {projectsList.map((project, i) => (
         <ProjectCard
           key={project.title}
@@ -192,4 +143,4 @@ const Projects: React.FC = () => {
   );
 };
 
-export default Projects;
+export default ProjectsSection;
