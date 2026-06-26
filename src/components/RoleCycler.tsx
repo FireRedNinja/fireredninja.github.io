@@ -123,7 +123,7 @@ const RoleCycler: React.FC = () => {
       <span
         ref={currentRef}
         className="role-text font-sans text-xs font-medium uppercase tracking-[0.25em] sm:text-sm"
-        style={{ clipPath: "inset(0 0 0 0)", color: "rgba(28,18,8,0.6)" }}
+        style={{ clipPath: "inset(0 0 0 0)", color: "#C8F135" }}
       >
         {roles[0]}
       </span>
@@ -132,7 +132,7 @@ const RoleCycler: React.FC = () => {
       <span
         ref={nextRef}
         className="absolute inset-0 font-sans text-xs font-medium uppercase tracking-[0.25em] sm:text-sm"
-        style={{ opacity: 0, clipPath: "inset(0 100% 0 0)", color: "rgba(28,18,8,0.6)" }}
+        style={{ opacity: 0, clipPath: "inset(0 100% 0 0)", color: "#C8F135" }}
         aria-hidden="true"
       >
         {roles[1]}
@@ -142,7 +142,7 @@ const RoleCycler: React.FC = () => {
       <span
         ref={cursorRef}
         className="pointer-events-none absolute top-0 bottom-0 w-px"
-        style={{ left: 0, opacity: 0, backgroundColor: "#C4613A" }}
+        style={{ left: 0, opacity: 0, backgroundColor: "#C8F135" }}
         aria-hidden="true"
       />
     </div>

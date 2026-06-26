@@ -7,57 +7,34 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const footerRef = useRef<HTMLElement>(null);
 
-  // ── Scroll-triggered reveals ────────────────────────────────────
   useGSAP(
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      // Border line draws in from center
-      gsap.set(".footer-border", { scaleX: 0 });
-      gsap.to(".footer-border", {
-        scaleX: 1,
-        duration: 0.8,
-        ease: "power3.inOut",
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: "top 92%",
-          once: true,
-        },
-      });
+      gsap.fromTo(
+        ".footer-content",
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: footerRef.current, start: "top 92%", once: true },
+        }
+      );
 
-      // Brand + copyright fades up
-      gsap.set(".footer-copyright", { opacity: 0, y: 20 });
-      gsap.to(".footer-copyright", {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: "top 88%",
-          once: true,
-        },
-      });
-
-      // Social icons pop with rotation
-      gsap.set(".footer-social-icon", {
-        scale: 0,
-        rotation: -180,
-        opacity: 0,
-      });
-      gsap.to(".footer-social-icon", {
-        scale: 1,
-        rotation: 0,
-        opacity: 1,
-        stagger: 0.1,
-        duration: 0.5,
-        ease: "power4.out",
-        clearProps: "all",
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: "top 88%",
-          once: true,
-        },
+      gsap.utils.toArray<Element>(".footer-social-icon").forEach((el, i) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, scale: 0.6 },
+          {
+            opacity: 1, scale: 1,
+            duration: 0.45,
+            delay: 0.12 + i * 0.08,
+            ease: "power3.out",
+            scrollTrigger: { trigger: footerRef.current, start: "top 92%", once: true },
+          }
+        );
       });
     },
     { scope: footerRef }
@@ -66,49 +43,60 @@ const Footer: React.FC = () => {
   return (
     <footer
       ref={footerRef}
-      className="py-16 px-8 md:px-16"
+      className="px-8 py-20 md:px-16"
       role="contentinfo"
+      style={{ borderTop: "1px solid rgba(240,240,238,0.06)" }}
     >
-      <div className="mx-auto max-w-6xl">
-        {/* Terracotta rule */}
-        <div
-          className="footer-border mb-12"
-          style={{ height: '1px', backgroundColor: '#C4613A', transformOrigin: 'center' }}
-          aria-hidden="true"
-        />
-
-        {/* Row 1: brand mark + copyright */}
-        <div className="footer-copyright flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between mb-10">
+      <div className="mx-auto max-w-6xl footer-content" style={{ opacity: 0 }}>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between mb-12">
           <span
-            className="font-display font-bold uppercase"
-            style={{ color: '#F5EDD8', fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', letterSpacing: '-0.02em' }}
+            className="font-display font-black uppercase"
+            style={{
+              color: "#F0F0EE",
+              fontSize: "clamp(1.5rem, 4vw, 3rem)",
+              letterSpacing: "-0.03em",
+            }}
           >
             {profile.handle}
           </span>
-          <span className="font-sans text-sm" style={{ color: 'rgba(245,237,216,0.45)' }}>
+          <span
+            className="font-sans"
+            style={{ fontSize: "0.65rem", color: "rgba(240,240,238,0.22)", letterSpacing: "0.14em" }}
+          >
             © {currentYear}
           </span>
         </div>
 
-        {/* Row 2: social links */}
         <nav aria-label="Social media links">
-          <ul className="flex items-center gap-4" role="list">
-            {profile.socialLinks.map((link) => {
+          <ul className="flex items-center gap-3" role="list">
+            {profile.socialLinks.map(link => {
               const Icon = link.icon;
               return (
-                <li key={link.name} className="footer-social-icon">
-                  <MagneticButton strength={0.45}>
+                <li key={link.name} className="footer-social-icon" style={{ opacity: 0 }}>
+                  <MagneticButton strength={0.4}>
                     <a
                       href={link.url}
                       target={link.url.startsWith("mailto:") ? undefined : "_blank"}
                       rel={link.url.startsWith("mailto:") ? undefined : "noopener noreferrer"}
                       aria-label={link.ariaLabel}
-                      className="flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-200"
-                      style={{ color: '#F5EDD8' }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#C4613A'; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#F5EDD8'; }}
+                      className="flex h-11 w-11 items-center justify-center transition-all duration-200"
+                      style={{
+                        color: "rgba(240,240,238,0.4)",
+                        border: "1px solid rgba(240,240,238,0.1)",
+                        borderRadius: "2px",
+                      }}
+                      onMouseEnter={e => {
+                        const el = e.currentTarget as HTMLAnchorElement;
+                        el.style.color = "#C8F135";
+                        el.style.borderColor = "#C8F135";
+                      }}
+                      onMouseLeave={e => {
+                        const el = e.currentTarget as HTMLAnchorElement;
+                        el.style.color = "rgba(240,240,238,0.4)";
+                        el.style.borderColor = "rgba(240,240,238,0.1)";
+                      }}
                     >
-                      <Icon className="h-5 w-5" aria-hidden="true" />
+                      <Icon className="h-4 w-4" aria-hidden="true" />
                     </a>
                   </MagneticButton>
                 </li>
